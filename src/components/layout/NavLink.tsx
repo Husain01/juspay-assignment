@@ -13,24 +13,18 @@ export function NavLink({ icon: Icon, label, active, onClick }: NavLinkProps) {
   return (
     <motion.button
       onClick={onClick}
-      whileHover={{ x: 4 }}
+      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.15 }}
       className={cn(
-        "relative w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+        "relative w-full flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors",
         active
-          ? "bg-primary/10 text-primary"
-          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          ? "bg-[#1C1C1C] text-white"
+          : "text-[#1C1C1C] hover:bg-[rgba(28,28,28,0.05)]"
       )}
     >
-      {active && (
-        <motion.div
-          layoutId="activeTab"
-          className="absolute inset-0 rounded-lg bg-primary/10"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        />
-      )}
-      <Icon className={cn("relative z-10 h-5 w-5", active && "text-primary")} />
-      <span className="relative z-10">{label}</span>
+      <Icon className="h-4 w-4" />
+      <span>{label}</span>
     </motion.button>
   );
 }

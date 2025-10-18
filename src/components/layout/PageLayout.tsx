@@ -1,35 +1,56 @@
-import { ReactNode, useState } from "react";
-import { Sidebar } from "./Sidebar";
-import { TopBar } from "./TopBar";
-import { cn } from "@/lib/utils";
+import { ReactNode, createContext, useContext, useState } from "react";
+import { SidebarLeft } from "./SidebarLeft";
+import { SidebarRight } from "./SidebarRight";
+import { AppSidebarInset } from "./AppSidebarInset";
+
+interface SidebarContextType {
+  leftSidebarOpen: boolean;
+  rightSidebarOpen: boolean;
+  toggleLeftSidebar: () => void;
+  toggleRightSidebar: () => void;
+}
+
+const SidebarContext = createContext<SidebarContextType | null>(null);
+
+export function useSidebar() {
+  const context = useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a PageLayout");
+  }
+  return context;
+}
 
 interface PageLayoutProps {
   children: ReactNode;
-  className?: string;
   currentPage: "home" | "orders";
   onNavigate: (page: "home" | "orders") => void;
 }
 
 export function PageLayout({
   children,
-  className,
   currentPage,
   onNavigate,
 }: PageLayoutProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [leftSidebarOpen, setLeftSidebarOpen] = useState(true);
+  const [rightSidebarOpen, setRightSidebarOpen] = useState(true);
+
+  const toggleLeftSidebar = () => setLeftSidebarOpen(!leftSidebarOpen);
+  const toggleRightSidebar = () => setRightSidebarOpen(!rightSidebarOpen);
 
   return (
-    <div className="relative min-h-screen bg-background">
-      <Sidebar
-        currentPage={currentPage}
-        onNavigate={onNavigate}
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
-      <TopBar onMenuClick={() => setIsSidebarOpen(!isSidebarOpen)} />
-      <main className={cn("pt-16 lg:ml-64", className)}>
-        <div className="p-4 md:p-6">{children}</div>
-      </main>
-    </div>
+    <SidebarContext.Provider
+      value={{
+        leftSidebarOpen,
+        rightSidebarOpen,
+        toggleLeftSidebar,
+        toggleRightSidebar,
+      }}
+    >
+      <div className="flex h-screen">
+        <SidebarLeft currentPage={currentPage} onNavigate={onNavigate} />
+        <AppSidebarInset>{children}</AppSidebarInset>
+        <SidebarRight />
+      </div>
+    </SidebarContext.Provider>
   );
 }

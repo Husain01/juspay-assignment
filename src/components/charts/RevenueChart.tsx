@@ -1,58 +1,104 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { motion } from "framer-motion";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const data = [
-  { name: 'Jan', revenue: 4000 },
-  { name: 'Feb', revenue: 3000 },
-  { name: 'Mar', revenue: 5000 },
-  { name: 'Apr', revenue: 4500 },
-  { name: 'May', revenue: 6000 },
-  { name: 'Jun', revenue: 5500 },
-  { name: 'Jul', revenue: 7000 },
-  { name: 'Aug', revenue: 6500 },
-  { name: 'Sep', revenue: 8000 },
-  { name: 'Oct', revenue: 7500 },
-  { name: 'Nov', revenue: 9000 },
-  { name: 'Dec', revenue: 8500 },
-]
+  { day: "Mon", currentWeek: 8500, previousWeek: 9800 },
+  { day: "Tue", currentWeek: 9200, previousWeek: 10200 },
+  { day: "Wed", currentWeek: 7800, previousWeek: 9500 },
+  { day: "Thu", currentWeek: 8800, previousWeek: 9200 },
+  { day: "Fri", currentWeek: 7600, previousWeek: 10100 },
+  { day: "Sat", currentWeek: 7200, previousWeek: 8900 },
+  { day: "Sun", currentWeek: 8100, previousWeek: 9300 },
+];
 
 export function RevenueChart() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Revenue Overview</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-            <XAxis
-              dataKey="name"
-              className="text-xs"
-              tick={{ fill: 'hsl(var(--muted-foreground))' }}
-            />
-            <YAxis
-              className="text-xs"
-              tick={{ fill: 'hsl(var(--muted-foreground))' }}
-            />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: 'hsl(var(--popover))',
-                border: '1px solid hsl(var(--border))',
-                borderRadius: '8px',
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="revenue"
-              stroke="hsl(var(--primary))"
-              strokeWidth={2}
-              dot={{ fill: 'hsl(var(--primary))' }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </CardContent>
-    </Card>
-  )
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="rounded-2xl bg-white p-6"
+      style={{ border: "1px solid rgba(28, 28, 28, 0.1)" }}
+    >
+      <div className="mb-6">
+        <h3 className="text-base font-semibold text-[#1C1C1C]">Revenue</h3>
+        <div className="mt-4 flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
+            <span
+              className="text-xs font-normal"
+              style={{ color: "rgba(28, 28, 28, 0.4)" }}
+            >
+              Current Week{" "}
+              <span className="font-semibold text-[#1C1C1C]">$58,211</span>
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-2 w-2 rounded-full bg-[#A8C5DA]" />
+            <span
+              className="text-xs font-normal"
+              style={{ color: "rgba(28, 28, 28, 0.4)" }}
+            >
+              Previous Week{" "}
+              <span className="font-semibold text-[#1C1C1C]">$68,768</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <ResponsiveContainer width="100%" height={280}>
+        <LineChart data={data}>
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke="rgba(28, 28, 28, 0.1)"
+            vertical={false}
+          />
+          <XAxis
+            dataKey="day"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
+          />
+          <YAxis
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
+            tickFormatter={(value) => `${value / 1000}k`}
+          />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#FFFFFF",
+              border: "1px solid rgba(28, 28, 28, 0.1)",
+              borderRadius: "8px",
+              fontSize: "12px",
+            }}
+            formatter={(value: number) => [`$${value.toLocaleString()}`, ""]}
+          />
+          <Line
+            type="monotone"
+            dataKey="currentWeek"
+            stroke="#1C1C1C"
+            strokeWidth={2}
+            dot={{ fill: "#1C1C1C", r: 4 }}
+            activeDot={{ r: 6 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="previousWeek"
+            stroke="#A8C5DA"
+            strokeWidth={2}
+            dot={{ fill: "#A8C5DA", r: 4 }}
+            activeDot={{ r: 6 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </motion.div>
+  );
 }
-
