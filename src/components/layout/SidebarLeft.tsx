@@ -52,7 +52,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
             ease: [0.4, 0.0, 0.2, 1],
             type: "tween",
           }}
-          className="h-full overflow-hidden"
+          className="h-full overflow-hidden sticky top-0"
           style={{ borderRight: "1px solid rgba(28, 28, 28, 0.1)" }}
         >
           <motion.div
@@ -62,19 +62,40 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
             exit={{ opacity: 0 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
+            {/* User Profile Section - Outside padding */}
             <div
-              className="border-b p-4"
+              className="px-4"
               style={{ borderColor: "rgba(28, 28, 28, 0.1)" }}
             >
-              <div className="flex h-16 items-center gap-2">
-                <div className="h-6 w-6 rounded-lg bg-[#1C1C1C]" />
+              <div className="flex h-16 items-center gap-3">
+                <div className="relative">
+                  {/* Outer light blue ring */}
+                  <div className="h-8 w-8 rounded-full border-2 border-[#87CEEB] flex items-center justify-center">
+                    {/* Inner avatar with sunset gradient */}
+                    <div className="h-6 w-6 rounded-full relative overflow-hidden">
+                      {/* Dark silhouette */}
+                      <div className="absolute inset-0 bg-[#1C1C1C] rounded-full" />
+                      {/* Sunset gradient overlay */}
+                      <div
+                        className="absolute inset-0 rounded-full"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%)",
+                          mask: "radial-gradient(circle at 50% 70%, transparent 30%, black 50%)",
+                          WebkitMask:
+                            "radial-gradient(circle at 50% 70%, transparent 30%, black 50%)",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
                 <span className="text-sm font-normal text-[#1C1C1C]">
                   ByeWind
                 </span>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4">
+            <div className="flex-1 overflow-y-auto p-4 max-h-[calc(100vh-64px)]">
               {/* Favorites Section */}
               <div className="mb-3">
                 <div className="mb-3 flex items-center justify-between">

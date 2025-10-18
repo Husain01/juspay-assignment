@@ -46,7 +46,7 @@ export function PageLayout({
         toggleRightSidebar,
       }}
     >
-      <div className="flex h-screen">
+      <div className="flex h-screen overflow-hidden">
         <SidebarLeft currentPage={currentPage} onNavigate={onNavigate} />
         <AppSidebarInset>{children}</AppSidebarInset>
         <SidebarRight />
