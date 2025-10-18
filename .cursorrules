@@ -1,0 +1,323 @@
+# Juspay Dashboard - Cursor Rules
+
+## Project Overview
+
+This is a React + TypeScript SaaS dashboard built with Vite, Tailwind CSS v4, and shadcn/ui components.
+
+## Tech Stack
+
+- **Framework:** React 19 with TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS v4 (uses `@import "tailwindcss"` and `@theme` directive)
+- **UI Components:** shadcn/ui (Radix UI primitives)
+- **State Management:** Zustand
+- **Animations:** Framer Motion
+- **Charts:** Recharts
+- **Icons:** Lucide React
+
+## Code Style & Conventions
+
+### TypeScript
+
+- Use strict mode
+- Prefer interfaces over types for object shapes
+- Use type inference where possible
+- Always define return types for functions
+- Use `const` assertions for literal types
+
+### React
+
+- Use functional components with hooks
+- Prefer named exports over default exports (except for pages)
+- Use `React.FC` or explicit prop types
+- Implement proper error boundaries
+- Use memo, useCallback, useMemo for optimization when needed
+
+### File Naming
+
+- Components: PascalCase (e.g., `Button.tsx`, `OrdersTable.tsx`)
+- Utilities: camelCase (e.g., `utils.ts`, `formatters.ts`)
+- Hooks: camelCase with `use` prefix (e.g., `useStore.ts`)
+- Pages: PascalCase with `Page` suffix (e.g., `HomePage.tsx`)
+
+### Component Structure
+
+```typescript
+// 1. Imports (external, then internal)
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/button'
+
+// 2. Types/Interfaces
+interface ComponentProps {
+  title: string
+  onAction?: () => void
+}
+
+// 3. Constants
+const ANIMATION_VARIANTS = { ... }
+
+// 4. Component
+export function Component({ title, onAction }: ComponentProps) {
+  // Hooks
+  const [state, setState] = useState()
+
+  // Handlers
+  const handleClick = () => { ... }
+
+  // Render
+  return ( ... )
+}
+```
+
+## Tailwind CSS v4 Guidelines
+
+### No Config File
+
+- Tailwind v4 doesn't use `tailwind.config.js`
+- All configuration is done in CSS using the `@theme` directive
+
+### CSS Structure
+
+```css
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3b82f6;
+  /* other custom tokens */
+}
+
+.dark {
+  --color-primary: #60a5fa;
+}
+```
+
+### Utility Classes
+
+- Use `cn()` helper from `@/lib/utils` for conditional classes
+- Prefer Tailwind utilities over custom CSS
+- Use responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`, `2xl:`
+- Use dark mode prefix: `dark:`
+
+## shadcn/ui Components
+
+### Adding New Components
+
+- Components live in `src/components/ui/`
+- They are fully editable and owned by the project
+- Always use the `cn()` utility for className merging
+- Maintain accessibility (ARIA attributes, keyboard navigation)
+
+### Customization
+
+- Modify components directly in `src/components/ui/`
+- Update theme tokens in `src/index.css` under `@theme`
+- Use Radix UI props for behavior customization
+
+## State Management (Zustand)
+
+### Store Pattern
+
+```typescript
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
+interface Store {
+  // State
+  value: string;
+  // Actions
+  setValue: (val: string) => void;
+}
+
+export const useStore = create<Store>()(
+  persist(
+    (set) => ({
+      value: "",
+      setValue: (val) => set({ value: val }),
+    }),
+    { name: "store-name" }
+  )
+);
+```
+
+### Best Practices
+
+- Keep stores focused and single-purpose
+- Use middleware for persistence, devtools
+- Avoid deep nesting in state
+- Derive computed values with useMemo
+
+## Animations (Framer Motion)
+
+### Performance
+
+- Always use `transform` and `opacity` for animations (GPU-accelerated)
+- Avoid animating `height`, `width` directly - use `scale` instead
+- Use `layout` prop for layout animations
+- Set `will-change` for frequently animated elements
+
+### Patterns
+
+```typescript
+// Simple animation
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3 }}
+/>
+
+// Stagger children
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+}
+
+<motion.div variants={container} initial="hidden" animate="show">
+  {items.map(item => (
+    <motion.div key={item.id} variants={itemVariants} />
+  ))}
+</motion.div>
+```
+
+## Path Aliases
+
+- Use `@/` for imports from `src/`
+- Example: `import { Button } from '@/components/ui/button'`
+- Configured in `tsconfig.json` and `vite.config.ts`
+
+## Performance Guidelines
+
+### Code Splitting
+
+- Use dynamic imports for routes
+- Lazy load heavy components
+- Split vendor chunks in Vite config
+
+### Optimization
+
+- Memoize expensive computations with `useMemo`
+- Memoize callbacks with `useCallback`
+- Use `React.memo` for pure components
+- Implement virtualization for long lists
+
+### Bundle Size
+
+- Keep bundle under 500KB (current warning threshold)
+- Use tree-shaking friendly imports
+- Analyze bundle with `vite-bundle-analyzer`
+
+## Accessibility (a11y)
+
+### Requirements
+
+- All interactive elements must be keyboard accessible
+- Provide ARIA labels for icons and buttons
+- Maintain proper heading hierarchy
+- Ensure color contrast meets WCAG AA standards
+- Support screen readers
+- Add focus indicators
+
+### Testing
+
+- Test with keyboard only (Tab, Enter, Space, Arrow keys)
+- Test with screen reader (VoiceOver, NVDA)
+- Use axe DevTools for automated checks
+
+## Responsive Design
+
+### Breakpoints (Tailwind defaults)
+
+- `sm`: 640px
+- `md`: 768px
+- `lg`: 1024px
+- `xl`: 1280px
+- `2xl`: 1536px
+
+### Mobile-First Approach
+
+- Write base styles for mobile
+- Add breakpoint prefixes for larger screens
+- Test on real devices when possible
+- Hide/show elements appropriately with `hidden` and `block` utilities
+
+## Git Workflow
+
+### Commit Messages
+
+Follow conventional commits:
+
+- `feat:` New feature
+- `fix:` Bug fix
+- `docs:` Documentation
+- `style:` Formatting
+- `refactor:` Code restructuring
+- `perf:` Performance improvement
+- `test:` Tests
+- `chore:` Maintenance
+
+### Branch Naming
+
+- `feature/description`
+- `fix/description`
+- `refactor/description`
+
+## Testing
+
+### Unit Tests (Vitest)
+
+- Place tests next to the code file: `Component.test.tsx`
+- Use React Testing Library for component tests
+- Mock external dependencies
+- Test user interactions, not implementation
+
+### Coverage Goals
+
+- Aim for >80% coverage
+- Focus on critical paths
+- Test edge cases and error states
+
+## Deployment (Vercel)
+
+### Build Command
+
+```bash
+npm run build
+```
+
+### Environment Variables
+
+- Add `.env.local` for local development
+- Configure in Vercel dashboard for production
+- Never commit `.env` files
+
+## Common Issues & Solutions
+
+### Issue: Tailwind classes not working
+
+- Ensure `@import "tailwindcss"` is at the top of `index.css`
+- Check that file is included in `content` paths (handled by v4 automatically)
+- Verify PostCSS config has `@tailwindcss/postcss` plugin
+
+### Issue: TypeScript path alias errors
+
+- Ensure `tsconfig.json` has `baseUrl` and `paths` configured
+- Ensure `vite.config.ts` has matching alias configuration
+- Restart TypeScript server
+
+### Issue: Framer Motion type errors
+
+- Use `as const` for animation variant types
+- Explicitly type `transition` objects if needed
+- Update `@types/react` to latest version
+
+## Resources
+
+- [Tailwind CSS v4 Docs](https://tailwindcss.com/blog/tailwindcss-v4)
+- [shadcn/ui](https://ui.shadcn.com)
+- [Radix UI](https://www.radix-ui.com)
+- [Framer Motion](https://www.framer.com/motion)
+- [Zustand](https://github.com/pmndrs/zustand)
+- [Vite](https://vitejs.dev)
