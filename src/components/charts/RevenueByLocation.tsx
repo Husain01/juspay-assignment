@@ -19,7 +19,6 @@ export function RevenueByLocation() {
         backgroundColor: "#F7F9FB", // fill_4Z5D9V
         border: "1px solid rgba(28, 28, 28, 0.1)",
         padding: "24px", // layout_0FGEZM padding
-        width: "202px", // layout_0FGEZM width
       }}
     >
       <div className="flex flex-col gap-4 h-full">
@@ -27,7 +26,7 @@ export function RevenueByLocation() {
         <div className="flex flex-col">
           <h3
             className="text-sm font-semibold text-[#1C1C1C]"
-            style={{ fontSize: "14px", fontWeight: 600 }}
+            style={{ fontSize: "12px", fontWeight: 600 }}
           >
             Revenue by Location
           </h3>
