@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Check, MoreHorizontal, Calendar, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Order } from "@/store/useStore";
 
 interface OrderListTableProps {

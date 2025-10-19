@@ -1,19 +1,19 @@
-import { useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
-import { Search, Filter, Download } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { Search, Filter, Download } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { OrdersTable } from '@/components/orders/OrdersTable'
-import { Pagination } from '@/components/orders/Pagination'
-import { useStore } from '@/store/useStore'
+} from "@/components/ui/select";
+import { OrdersTable } from "@/components/orders/OrdersTable";
+import { Pagination } from "@/components/orders/Pagination";
+import { useStore } from "@/store/useStore";
 
 export function OrdersPage() {
   const {
@@ -28,59 +28,60 @@ export function OrdersPage() {
     setSortBy,
     setCurrentPage,
     setItemsPerPage,
-  } = useStore()
+  } = useStore();
 
-  const [localSearch, setLocalSearch] = useState(searchQuery)
+  const [localSearch, setLocalSearch] = useState(searchQuery);
 
   // Filter and sort orders
   const filteredAndSortedOrders = useMemo(() => {
-    let filtered = orders
+    let filtered = orders;
 
     // Apply search filter
     if (searchQuery) {
       filtered = filtered.filter(
         (order) =>
-          order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          order.customer.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+          order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          order.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          order.project.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
 
     // Apply status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter((order) => order.status === statusFilter)
+    if (statusFilter !== "all") {
+      filtered = filtered.filter((order) => order.status === statusFilter);
     }
 
     // Apply sorting
     const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
-        case 'date-desc':
-          return new Date(b.date).getTime() - new Date(a.date).getTime()
-        case 'date-asc':
-          return new Date(a.date).getTime() - new Date(b.date).getTime()
-        case 'amount-desc':
-          return b.amount - a.amount
-        case 'amount-asc':
-          return a.amount - b.amount
+        case "date-desc":
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        case "date-asc":
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        case "orderId-desc":
+          return b.orderId.localeCompare(a.orderId);
+        case "orderId-asc":
+          return a.orderId.localeCompare(b.orderId);
         default:
-          return 0
+          return 0;
       }
-    })
+    });
 
-    return sorted
-  }, [orders, searchQuery, statusFilter, sortBy])
+    return sorted;
+  }, [orders, searchQuery, statusFilter, sortBy]);
 
   // Paginate orders
   const paginatedOrders = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    return filteredAndSortedOrders.slice(startIndex, startIndex + itemsPerPage)
-  }, [filteredAndSortedOrders, currentPage, itemsPerPage])
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredAndSortedOrders.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredAndSortedOrders, currentPage, itemsPerPage]);
 
-  const totalPages = Math.ceil(filteredAndSortedOrders.length / itemsPerPage)
+  const totalPages = Math.ceil(filteredAndSortedOrders.length / itemsPerPage);
 
   const handleSearch = (value: string) => {
-    setLocalSearch(value)
-    setSearchQuery(value)
-  }
+    setLocalSearch(value);
+    setSearchQuery(value);
+  };
 
   return (
     <motion.div
@@ -145,8 +146,8 @@ export function OrdersPage() {
               <SelectContent>
                 <SelectItem value="date-desc">Date (Newest)</SelectItem>
                 <SelectItem value="date-asc">Date (Oldest)</SelectItem>
-                <SelectItem value="amount-desc">Amount (High)</SelectItem>
-                <SelectItem value="amount-asc">Amount (Low)</SelectItem>
+                <SelectItem value="orderId-desc">Order ID (Z-A)</SelectItem>
+                <SelectItem value="orderId-asc">Order ID (A-Z)</SelectItem>
               </SelectContent>
             </Select>
 
@@ -184,6 +185,5 @@ export function OrdersPage() {
         onPageChange={setCurrentPage}
       />
     </motion.div>
-  )
+  );
 }
-
