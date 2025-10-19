@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 
+// Exact data from Figma analysis
 const locations = [
-  { city: "New York", revenue: "72K", percentage: 72, color: "#1C1C1C" },
-  { city: "San Francisco", revenue: "39K", percentage: 39, color: "#A8C5DA" },
-  { city: "Sydney", revenue: "25K", percentage: 25, color: "#E5ECF6" },
-  { city: "Singapore", revenue: "61K", percentage: 61, color: "#E3F5FF" },
+  { name: "New York", revenue: "72K", percentage: 100 },
+  { name: "Singapore", revenue: "61K", percentage: 85 },
+  { name: "San Francisco", revenue: "39K", percentage: 54 },
+  { name: "Sydney", revenue: "25K", percentage: 35 },
 ];
 
 export function RevenueByLocation() {
@@ -13,116 +14,83 @@ export function RevenueByLocation() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-2xl p-4"
+      className="rounded-2xl w-full h-full"
       style={{
-        backgroundColor: "#F7F9FB",
+        backgroundColor: "#F7F9FB", // fill_4Z5D9V
         border: "1px solid rgba(28, 28, 28, 0.1)",
+        padding: "24px", // layout_0FGEZM padding
+        width: "202px", // layout_0FGEZM width
       }}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4 h-full">
         {/* Title */}
         <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-[#1C1C1C]">
+          <h3
+            className="text-sm font-semibold text-[#1C1C1C]"
+            style={{ fontSize: "14px", fontWeight: 600 }}
+          >
             Revenue by Location
           </h3>
         </div>
 
-        {/* Simplified World Map Representation */}
-        <div
-          className="relative flex items-center justify-center rounded-xl"
-          style={{
-            backgroundColor: "#FFFFFF",
-            height: "120px",
-          }}
-        >
-          {/* Map Dots representing locations */}
-          <div className="relative h-full w-full">
-            {/* New York - Right side, upper */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="absolute"
-              style={{ top: "30%", right: "25%" }}
-            >
-              <div className="relative">
-                <div className="h-3 w-3 rounded-full bg-[#1C1C1C]" />
-                <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-[#1C1C1C] opacity-30" />
-              </div>
-            </motion.div>
-
-            {/* San Francisco - Right side, middle */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3 }}
-              className="absolute"
-              style={{ top: "40%", right: "35%" }}
-            >
-              <div className="relative">
-                <div className="h-3 w-3 rounded-full bg-[#A8C5DA]" />
-                <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-[#A8C5DA] opacity-30" />
-              </div>
-            </motion.div>
-
-            {/* Sydney - Left side, lower */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="absolute"
-              style={{ bottom: "25%", left: "30%" }}
-            >
-              <div className="relative">
-                <div className="h-3 w-3 rounded-full bg-[#E5ECF6]" />
-                <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-[#E5ECF6] opacity-30" />
-              </div>
-            </motion.div>
-
-            {/* Singapore - Center-right, middle */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5 }}
-              className="absolute"
-              style={{ top: "50%", left: "55%" }}
-            >
-              <div className="relative">
-                <div className="h-3 w-3 rounded-full bg-[#E3F5FF]" />
-                <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-[#E3F5FF] opacity-30" />
-              </div>
-            </motion.div>
+        {/* World Map */}
+        <div className="relative" style={{ height: "82px", width: "100%" }}>
+          <div className="relative w-full h-full rounded-lg overflow-hidden">
+            {/* Exact Figma World Map */}
+            <img
+              src="/world-map.png"
+              alt="World Map"
+              className="w-full h-full object-cover"
+              style={{ opacity: 0.5 }}
+            />
           </div>
         </div>
 
         {/* Location List */}
-        <div className="space-y-2">
-          {locations.map((location, index) => (
-            <motion.div
-              key={location.city}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * index }}
-              className="space-y-1"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-normal text-[#1C1C1C]">
-                  {location.city}
+        <div className="space-y-3">
+          {locations.map((location) => (
+            <div key={location.name} className="flex flex-col gap-1">
+              {/* Location Name and Revenue */}
+              <div className="flex justify-between items-center">
+                <span
+                  className="text-xs font-normal text-[#1C1C1C]"
+                  style={{ fontSize: "12px" }}
+                >
+                  {location.name}
                 </span>
-                <span className="text-sm font-semibold text-[#1C1C1C]">
+                <span
+                  className="text-xs font-normal text-[#1C1C1C]"
+                  style={{ fontSize: "12px" }}
+                >
                   {location.revenue}
                 </span>
               </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-[#FFFFFF]">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${location.percentage}%` }}
-                  transition={{ duration: 0.8, delay: 0.2 + 0.1 * index }}
+
+              {/* Progress Bar - Exact Figma gradient */}
+              <div
+                className="w-full rounded-full"
+                style={{
+                  height: "4px",
+                  backgroundColor: "#FFFFFF",
+                  padding:
+                    location.name === "New York"
+                      ? "0px 40px 0px 0px"
+                      : location.name === "Singapore"
+                      ? "0px 60px 0px 0px"
+                      : location.name === "San Francisco"
+                      ? "0px 90px 0px 0px"
+                      : "0px 80px 0px 0px", // Sydney
+                }}
+              >
+                <div
                   className="h-full rounded-full"
-                  style={{ backgroundColor: location.color }}
+                  style={{
+                    width: `${location.percentage}%`,
+                    background: "#A8C5DA",
+                  }}
                 />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

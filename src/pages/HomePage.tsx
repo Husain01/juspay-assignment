@@ -130,15 +130,11 @@ export function HomePage() {
             <RevenueChart />
           </motion.div>
         </div>
-        <div className="col-span-1">{/* Empty space */}</div>
-
-        {/* Fourth Row: Revenue by Location (3:1) */}
-        <div className="col-span-3">
-          <motion.div variants={itemVariants}>
+        <div className="col-span-1">
+          <motion.div variants={itemVariants} className="h-full">
             <RevenueByLocation />
           </motion.div>
         </div>
-        <div className="col-span-1">{/* Empty space */}</div>
 
         {/* Fifth Row: Top Selling Products (3:1) */}
         <div className="col-span-3">
@@ -146,10 +142,9 @@ export function HomePage() {
             <TopProducts />
           </motion.div>
         </div>
-        <div className="col-span-1">{/* Empty space */}</div>
 
         {/* Sixth Row: Total Sales Donut Chart (3:1) */}
-        <div className="col-span-3">
+        <div className="col-span-1">
           <motion.div variants={itemVariants}>
             <OrdersChart />
           </motion.div>
