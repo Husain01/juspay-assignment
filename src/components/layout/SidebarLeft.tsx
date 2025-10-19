@@ -8,11 +8,11 @@ import {
   Users2,
   NotebookPen,
   MessageCircle,
+  PieChart,
+  ShoppingBag,
+  FolderOpen,
+  BookOpen,
 } from "lucide-react";
-import ChartPieSlice from "@/assets/icons/chart-pie-slice.svg";
-import ShoppingBagOpen from "@/assets/icons/shopping-bag-open.svg";
-import FolderNotch from "@/assets/icons/folder-notch.svg";
-import BookOpenCustom from "@/assets/icons/book-open.svg";
 import { useSidebar } from "./PageLayout";
 
 interface SidebarLeftProps {
@@ -22,25 +22,25 @@ interface SidebarLeftProps {
 
 const dashboardItems = [
   {
-    icon: ChartPieSlice,
+    icon: PieChart,
     label: "Default",
     page: "home" as const,
     isSelected: true,
   },
   {
-    icon: ShoppingBagOpen,
+    icon: ShoppingBag,
     label: "eCommerce",
     page: "home" as const,
     hasChevron: true,
   },
   {
-    icon: FolderNotch,
+    icon: FolderOpen,
     label: "Projects",
     page: "home" as const,
     hasChevron: true,
   },
   {
-    icon: BookOpenCustom,
+    icon: BookOpen,
     label: "Online Courses",
     page: "home" as const,
     hasChevron: true,
@@ -126,52 +126,28 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               <div className="pb-3">
                 {/* Tab buttons with exact Figma spacing */}
                 <div className="flex items-center gap-4 mb-1">
-                  <button
-                    className="px-2 py-1 font-normal"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <button className="px-2 py-1 font-normal text-muted-foreground">
                     Favorites
                   </button>
-                  <button
-                    className="px-2 py-1 font-normal"
-                    style={{ color: "rgba(28, 28, 28, 0.2)" }}
-                  >
+                  <button className="px-2 py-1 font-normal text-muted-foreground/50">
                     Recently
                   </button>
                 </div>
                 {/* List items with exact Figma spacing */}
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-1 px-2 py-1">
-                    <div
-                      className="w-4 h-4 flex-shrink-0 flex items-center justify-center"
-                      style={{ backgroundColor: "transparent" }}
-                    >
-                      <div
-                        className="w-1.5 h-1.5 rounded-full"
-                        style={{ backgroundColor: "#D1D5DB" }}
-                      />
+                    <div className="w-4 h-4 flex-shrink-0 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
                     </div>
-                    <span
-                      className="text-sm font-normal"
-                      style={{ color: "#1C1C1C" }}
-                    >
+                    <span className="text-sm font-normal text-foreground">
                       Overview
                     </span>
                   </div>
                   <div className="flex items-center gap-1 px-2 py-1">
-                    <div
-                      className="w-4 h-4 flex-shrink-0 flex items-center justify-center"
-                      style={{ backgroundColor: "transparent" }}
-                    >
-                      <div
-                        className="w-1.5 h-1.5 rounded-full"
-                        style={{ backgroundColor: "#D1D5DB" }}
-                      />
+                    <div className="w-4 h-4 flex-shrink-0 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
                     </div>
-                    <span
-                      className="text-sm font-normal"
-                      style={{ color: "#1C1C1C" }}
-                    >
+                    <span className="text-sm font-normal text-foreground">
                       Projects
                     </span>
                   </div>
@@ -181,10 +157,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Dashboards Section */}
               <div className="mb-3">
                 <div className="py-1 px-3">
-                  <p
-                    className="text-sm font-normal"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <p className="text-sm font-normal text-muted-foreground">
                     Dashboards
                   </p>
                 </div>
@@ -192,31 +165,19 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                   {dashboardItems.map((item) => (
                     <div key={item.label}>
                       {item.isSelected ? (
-                        <div
-                          className="flex w-full items-center gap-1 rounded-lg py-1 pr-2 pl-5"
-                          style={{ backgroundColor: "rgba(28, 28, 28, 0.05)" }}
-                        >
-                          <img src={item.icon} alt="" className="h-5 w-5" />
-                          <span
-                            className="text-sm font-normal"
-                            style={{ color: "#1C1C1C" }}
-                          >
+                        <div className="flex w-full items-center gap-1 rounded-lg py-1 pr-2 pl-5 bg-muted/50">
+                          <item.icon className="h-5 w-5 text-foreground" />
+                          <span className="text-sm font-normal text-foreground">
                             {item.label}
                           </span>
                         </div>
                       ) : (
                         <div className="flex w-full items-center gap-1 rounded-lg py-1 pr-2 pl-0">
                           {item.hasChevron && (
-                            <ChevronRight
-                              className="h-4 w-4"
-                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
-                            />
+                            <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
                           )}
-                          <img src={item.icon} alt="" className="h-5 w-5" />
-                          <span
-                            className="text-sm font-normal"
-                            style={{ color: "#1C1C1C" }}
-                          >
+                          <item.icon className="h-5 w-5 text-foreground" />
+                          <span className="text-sm font-normal text-foreground">
                             {item.label}
                           </span>
                         </div>
@@ -229,10 +190,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Pages Section */}
               <div>
                 <div className="mb-1 px-3 py-1">
-                  <p
-                    className="text-sm font-normal"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <p className="text-sm font-normal text-muted-foreground">
                     Pages
                   </p>
                 </div>
@@ -242,18 +200,9 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                       {item.hasSubmenu ? (
                         <div>
                           <div className="flex w-full items-center gap-1 rounded-lg px-2 py-1 pr-2">
-                            <ChevronDown
-                              className="h-4 w-4"
-                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
-                            />
-                            <item.icon
-                              className="h-5 w-5"
-                              style={{ color: "#1C1C1C" }}
-                            />
-                            <span
-                              className="text-sm font-normal flex-1"
-                              style={{ color: "#1C1C1C" }}
-                            >
+                            <ChevronDown className="h-4 w-4 text-muted-foreground/50" />
+                            <item.icon className="h-5 w-5 text-foreground" />
+                            <span className="text-sm font-normal flex-1 text-foreground">
                               {item.label}
                             </span>
                           </div>
@@ -268,15 +217,9 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                                     className="h-5 w-5 flex items-center justify-center"
                                     style={{ opacity: 0 }}
                                   >
-                                    <div
-                                      className="w-1.5 h-1.5 rounded-full"
-                                      style={{ backgroundColor: "#D1D5DB" }}
-                                    />
+                                    <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
                                   </div>
-                                  <span
-                                    className="text-sm font-normal flex-1"
-                                    style={{ color: "#1C1C1C" }}
-                                  >
+                                  <span className="text-sm font-normal flex-1 text-foreground">
                                     {subItem.label}
                                   </span>
                                 </div>
@@ -294,19 +237,10 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                           onClick={() => onNavigate(item.page)}
                         >
                           {item.hasChevron && (
-                            <ChevronRight
-                              className="h-4 w-4"
-                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
-                            />
+                            <ChevronRight className="h-4 w-4 text-muted-foreground/50" />
                           )}
-                          <item.icon
-                            className="h-5 w-5"
-                            style={{ color: "#1C1C1C" }}
-                          />
-                          <span
-                            className="text-sm font-normal flex-1"
-                            style={{ color: "#1C1C1C" }}
-                          >
+                          <item.icon className="h-5 w-5 text-foreground" />
+                          <span className="text-sm font-normal flex-1 text-foreground">
                             {item.label}
                           </span>
                         </div>

@@ -89,9 +89,8 @@ export function OrderListPage() {
 
       {/* Table Controls Bar - Figma Design */}
       <div
-        className="flex items-center justify-between rounded-lg px-2 py-2"
+        className="flex items-center justify-between rounded-lg px-2 py-2 bg-muted/30"
         style={{
-          backgroundColor: "#F7F9FB",
           gap: "16px",
         }}
       >
@@ -100,48 +99,34 @@ export function OrderListPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 w-8 p-0 hover:bg-white/50"
-            style={{ backgroundColor: "transparent" }}
+            className="h-8 w-8 p-0 hover:bg-background/50"
           >
-            <Plus className="h-5 w-5" style={{ color: "#1C1C1C" }} />
+            <Plus className="h-5 w-5 text-foreground" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 w-8 p-0 hover:bg-white/50"
-            style={{ backgroundColor: "transparent" }}
+            className="h-8 w-8 p-0 hover:bg-background/50"
           >
-            <Filter className="h-5 w-5" style={{ color: "#1C1C1C" }} />
+            <Filter className="h-5 w-5 text-foreground" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-8 w-8 p-0 hover:bg-white/50"
-            style={{ backgroundColor: "transparent" }}
+            className="h-8 w-8 p-0 hover:bg-background/50"
           >
-            <ArrowUpDown className="h-5 w-5" style={{ color: "#1C1C1C" }} />
+            <ArrowUpDown className="h-5 w-5 text-foreground" />
           </Button>
         </div>
 
         {/* Right Group - Search */}
         <div className="relative">
-          <Search
-            className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2"
-            style={{ color: "rgba(28, 28, 28, 0.2)" }}
-          />
+          <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/50" />
           <Input
             placeholder="Search"
             value={localSearch}
             onChange={(e) => handleSearch(e.target.value)}
-            className="h-8 pl-8 pr-2"
-            style={{
-              backgroundColor: "rgba(255, 255, 255, 0.4)",
-              border: "1px solid rgba(28, 28, 28, 0.1)",
-              borderRadius: "8px",
-              width: "200px",
-              fontSize: "14px",
-              color: "rgba(28, 28, 28, 0.2)",
-            }}
+            className="h-8 pl-8 pr-2 bg-background/40 border-border/20 rounded-lg w-[200px] text-sm text-muted-foreground placeholder:text-muted-foreground/50"
           />
         </div>
       </div>
