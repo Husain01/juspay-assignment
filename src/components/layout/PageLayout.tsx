@@ -48,7 +48,7 @@ export function PageLayout({
     >
       <div className="flex h-screen overflow-hidden">
         <SidebarLeft currentPage={currentPage} onNavigate={onNavigate} />
-        <AppSidebarInset>{children}</AppSidebarInset>
+        <AppSidebarInset currentPage={currentPage}>{children}</AppSidebarInset>
         <SidebarRight />
       </div>
     </SidebarContext.Provider>

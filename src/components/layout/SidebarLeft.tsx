@@ -1,15 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutDashboard,
   ShoppingCart,
-  Package,
-  FolderOpen,
-  User,
-  Briefcase,
-  FileText,
-  MessageSquare,
+  ChevronRight,
+  ChevronDown,
+  UserCheck,
+  CreditCard,
+  Users2,
+  NotebookPen,
+  MessageCircle,
 } from "lucide-react";
-import { NavLink } from "./NavLink";
+import ChartPieSlice from "@/assets/icons/chart-pie-slice.svg";
+import ShoppingBagOpen from "@/assets/icons/shopping-bag-open.svg";
+import FolderNotch from "@/assets/icons/folder-notch.svg";
+import BookOpenCustom from "@/assets/icons/book-open.svg";
 import { useSidebar } from "./PageLayout";
 
 interface SidebarLeftProps {
@@ -18,23 +21,62 @@ interface SidebarLeftProps {
 }
 
 const dashboardItems = [
-  { icon: LayoutDashboard, label: "Default", page: "home" as const },
-  { icon: ShoppingCart, label: "eCommerce", page: "home" as const },
-  { icon: FolderOpen, label: "Projects", page: "home" as const },
-  { icon: Package, label: "Online Courses", page: "home" as const },
+  {
+    icon: ChartPieSlice,
+    label: "Default",
+    page: "home" as const,
+    isSelected: true,
+  },
+  {
+    icon: ShoppingBagOpen,
+    label: "eCommerce",
+    page: "home" as const,
+    hasChevron: true,
+  },
+  {
+    icon: FolderNotch,
+    label: "Projects",
+    page: "home" as const,
+    hasChevron: true,
+  },
+  {
+    icon: BookOpenCustom,
+    label: "Online Courses",
+    page: "home" as const,
+    hasChevron: true,
+  },
 ];
 
 const pageItems = [
   {
-    icon: User,
+    icon: UserCheck,
     label: "User Profile",
     page: "home" as const,
     hasSubmenu: true,
+    isExpanded: true,
+    subItems: [
+      { label: "Overview", page: "home" as const },
+      { label: "Projects", page: "home" as const },
+      { label: "Campaigns", page: "home" as const },
+      { label: "Documents", page: "home" as const },
+      { label: "Followers", page: "home" as const },
+    ],
   },
-  { icon: Briefcase, label: "Account", page: "home" as const },
-  { icon: Briefcase, label: "Corporate", page: "home" as const },
-  { icon: FileText, label: "Blog", page: "home" as const },
-  { icon: MessageSquare, label: "Social", page: "home" as const },
+  { icon: ShoppingCart, label: "Orders", page: "orders" as const },
+  {
+    icon: CreditCard,
+    label: "Account",
+    page: "home" as const,
+    hasChevron: true,
+  },
+  { icon: Users2, label: "Corporate", page: "home" as const, hasChevron: true },
+  { icon: NotebookPen, label: "Blog", page: "home" as const, hasChevron: true },
+  {
+    icon: MessageCircle,
+    label: "Social",
+    page: "home" as const,
+    hasChevron: true,
+  },
 ];
 
 export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
@@ -61,27 +103,15 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
             exit={{ opacity: 0 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
-            {/* User Profile Section - Outside padding */}
-            <div className="px-4 ">
-              <div className="flex h-16 items-center gap-3">
+            {/* User Profile Section */}
+            <div className="px-4 py-4">
+              <div className="flex h-12 items-center gap-3">
                 <div className="relative">
                   {/* Outer light blue ring */}
                   <div className="h-8 w-8 rounded-full border-2 border-[#87CEEB] flex items-center justify-center">
-                    {/* Inner avatar with sunset gradient */}
-                    <div className="h-6 w-6 rounded-full relative overflow-hidden">
-                      {/* Dark silhouette */}
-                      <div className="absolute inset-0 bg-[#1C1C1C] rounded-full" />
-                      {/* Sunset gradient overlay */}
-                      <div
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD700 100%)",
-                          mask: "radial-gradient(circle at 50% 70%, transparent 30%, black 50%)",
-                          WebkitMask:
-                            "radial-gradient(circle at 50% 70%, transparent 30%, black 50%)",
-                        }}
-                      />
+                    {/* Inner dark avatar */}
+                    <div className="h-6 w-6 rounded-full bg-[#1C1C1C] flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-white/20"></div>
                     </div>
                   </div>
                 </div>
@@ -91,47 +121,107 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 max-h-[calc(100vh-64px)]">
+            <div className="flex-1 overflow-y-auto px-4 py-6 max-h-[calc(100vh-64px)]">
               {/* Favorites Section */}
-              <div className="mb-3">
-                <div className="mb-3 flex items-center justify-between">
-                  <button className="text-sm font-normal text-foreground">
+              <div className="pb-3">
+                {/* Tab buttons with exact Figma spacing */}
+                <div className="flex items-center gap-4 mb-1">
+                  <button
+                    className="px-2 py-1 font-normal"
+                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  >
                     Favorites
                   </button>
-                  <button className="text-sm font-normal text-muted-foreground">
+                  <button
+                    className="px-2 py-1 font-normal"
+                    style={{ color: "rgba(28, 28, 28, 0.2)" }}
+                  >
                     Recently
                   </button>
                 </div>
-                <div className="mb-3 space-y-0">
-                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors hover:bg-accent text-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-foreground" />
-                    <span>Overview</span>
+                {/* List items with exact Figma spacing */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1 px-2 py-1">
+                    <div
+                      className="w-4 h-4 flex-shrink-0 flex items-center justify-center"
+                      style={{ backgroundColor: "transparent" }}
+                    >
+                      <div
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{ backgroundColor: "#D1D5DB" }}
+                      />
+                    </div>
+                    <span
+                      className="text-sm font-normal"
+                      style={{ color: "#1C1C1C" }}
+                    >
+                      Overview
+                    </span>
                   </div>
-                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors hover:bg-accent text-foreground">
-                    <div className="h-1.5 w-1.5 rounded-full bg-foreground" />
-                    <span>Projects</span>
+                  <div className="flex items-center gap-1 px-2 py-1">
+                    <div
+                      className="w-4 h-4 flex-shrink-0 flex items-center justify-center"
+                      style={{ backgroundColor: "transparent" }}
+                    >
+                      <div
+                        className="w-1.5 h-1.5 rounded-full"
+                        style={{ backgroundColor: "#D1D5DB" }}
+                      />
+                    </div>
+                    <span
+                      className="text-sm font-normal"
+                      style={{ color: "#1C1C1C" }}
+                    >
+                      Projects
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Dashboards Section */}
               <div className="mb-3">
-                <div className="mb-1 px-3 py-1">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="py-1 px-3">
+                  <p
+                    className="text-sm font-normal"
+                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  >
                     Dashboards
                   </p>
                 </div>
                 <div className="space-y-0">
                   {dashboardItems.map((item) => (
-                    <NavLink
-                      key={item.label}
-                      icon={item.icon}
-                      label={item.label}
-                      active={
-                        item.label === "Default" && currentPage === "home"
-                      }
-                      onClick={() => onNavigate(item.page)}
-                    />
+                    <div key={item.label}>
+                      {item.isSelected ? (
+                        <div
+                          className="flex w-full items-center gap-1 rounded-lg py-1 pr-2 pl-5"
+                          style={{ backgroundColor: "rgba(28, 28, 28, 0.05)" }}
+                        >
+                          <img src={item.icon} alt="" className="h-5 w-5" />
+                          <span
+                            className="text-sm font-normal"
+                            style={{ color: "#1C1C1C" }}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex w-full items-center gap-1 rounded-lg py-1 pr-2 pl-0">
+                          {item.hasChevron && (
+                            <ChevronRight
+                              className="h-4 w-4"
+                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
+                            />
+                          )}
+                          <img src={item.icon} alt="" className="h-5 w-5" />
+                          <span
+                            className="text-sm font-normal"
+                            style={{ color: "#1C1C1C" }}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -139,19 +229,89 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Pages Section */}
               <div>
                 <div className="mb-1 px-3 py-1">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <p
+                    className="text-sm font-normal"
+                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  >
                     Pages
                   </p>
                 </div>
                 <div className="space-y-0">
                   {pageItems.map((item) => (
-                    <NavLink
-                      key={item.label}
-                      icon={item.icon}
-                      label={item.label}
-                      active={false}
-                      onClick={() => onNavigate(item.page)}
-                    />
+                    <div key={item.label}>
+                      {item.hasSubmenu ? (
+                        <div>
+                          <div className="flex w-full items-center gap-1 rounded-lg px-2 py-1 pr-2">
+                            <ChevronDown
+                              className="h-4 w-4"
+                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
+                            />
+                            <item.icon
+                              className="h-5 w-5"
+                              style={{ color: "#1C1C1C" }}
+                            />
+                            <span
+                              className="text-sm font-normal flex-1"
+                              style={{ color: "#1C1C1C" }}
+                            >
+                              {item.label}
+                            </span>
+                          </div>
+                          {item.isExpanded && item.subItems && (
+                            <div className="ml-6 mt-0 space-y-0">
+                              {item.subItems.map((subItem) => (
+                                <div
+                                  key={subItem.label}
+                                  className="flex w-full items-center gap-1 rounded-lg px-2 py-1 pr-2"
+                                >
+                                  <div
+                                    className="h-5 w-5 flex items-center justify-center"
+                                    style={{ opacity: 0 }}
+                                  >
+                                    <div
+                                      className="w-1.5 h-1.5 rounded-full"
+                                      style={{ backgroundColor: "#D1D5DB" }}
+                                    />
+                                  </div>
+                                  <span
+                                    className="text-sm font-normal flex-1"
+                                    style={{ color: "#1C1C1C" }}
+                                  >
+                                    {subItem.label}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          className={`flex w-full items-center gap-1 rounded-lg px-2 py-1 pr-2 ${
+                            item.label === "Orders" && currentPage === "orders"
+                              ? "bg-accent text-accent-foreground pl-4"
+                              : ""
+                          }`}
+                          onClick={() => onNavigate(item.page)}
+                        >
+                          {item.hasChevron && (
+                            <ChevronRight
+                              className="h-4 w-4"
+                              style={{ color: "rgba(28, 28, 28, 0.2)" }}
+                            />
+                          )}
+                          <item.icon
+                            className="h-5 w-5"
+                            style={{ color: "#1C1C1C" }}
+                          />
+                          <span
+                            className="text-sm font-normal flex-1"
+                            style={{ color: "#1C1C1C" }}
+                          >
+                            {item.label}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>

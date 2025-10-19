@@ -7,9 +7,13 @@ import { Star } from "lucide-react";
 
 interface AppSidebarInsetProps {
   children: ReactNode;
+  currentPage?: "home" | "orders";
 }
 
-export function AppSidebarInset({ children }: AppSidebarInsetProps) {
+export function AppSidebarInset({
+  children,
+  currentPage,
+}: AppSidebarInsetProps) {
   const { toggleLeftSidebar } = useSidebar();
 
   return (
@@ -63,7 +67,9 @@ export function AppSidebarInset({ children }: AppSidebarInsetProps) {
           <div className="flex items-center gap-3 text-sm">
             <span className="text-muted-foreground">Dashboards</span>
             <span className="text-muted-foreground">/</span>
-            <span className="font-normal text-foreground">Default</span>
+            <span className="font-normal text-foreground">
+              {currentPage === "orders" ? "Orders" : "Default"}
+            </span>
           </div>
         </div>
         <TopBarActions />
