@@ -5,6 +5,7 @@ import { RevenueChart } from "@/components/charts/RevenueChart";
 import { OrdersChart } from "@/components/charts/OrdersChart";
 import { RevenueByLocation } from "@/components/charts/RevenueByLocation";
 import { TopProducts } from "@/components/dashboard/TopProducts";
+import { useTheme } from "@/components/theme-provider";
 
 const stats = [
   {
@@ -60,6 +61,9 @@ const itemVariants = {
 };
 
 export function HomePage() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       variants={containerVariants}
@@ -69,7 +73,11 @@ export function HomePage() {
     >
       {/* eCommerce Heading */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-sm font-semibold text-[#1C1C1C] px-2 py-1">
+        <h1
+          className={`text-sm font-semibold px-2 py-1 ${
+            isDark ? "text-white" : "text-[#1C1C1C]"
+          }`}
+        >
           eCommerce
         </h1>
       </motion.div>

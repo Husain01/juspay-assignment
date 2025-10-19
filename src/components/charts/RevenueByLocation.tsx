@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/theme-provider";
 
 // Exact data from Figma analysis
 const locations = [
@@ -9,6 +10,9 @@ const locations = [
 ];
 
 export function RevenueByLocation() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -16,17 +20,23 @@ export function RevenueByLocation() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl w-full h-full"
       style={{
-        backgroundColor: "#F7F9FB", // fill_4Z5D9V
-        border: "1px solid rgba(28, 28, 28, 0.1)",
-        padding: "24px", // layout_0FGEZM padding
+        backgroundColor: isDark ? "rgba(255, 255, 255, 0.05)" : "#F7F9FB",
+        border: isDark
+          ? "1px solid rgba(255, 255, 255, 0.1)"
+          : "1px solid rgba(28, 28, 28, 0.1)",
+        padding: "24px",
       }}
     >
       <div className="flex flex-col gap-4 h-full">
         {/* Title */}
         <div className="flex flex-col">
           <h3
-            className="text-sm font-semibold text-[#1C1C1C]"
-            style={{ fontSize: "12px", fontWeight: 600 }}
+            className="text-sm font-semibold"
+            style={{
+              fontSize: "12px",
+              fontWeight: 600,
+              color: isDark ? "#f8fafc" : "#1C1C1C",
+            }}
           >
             Revenue by Location
           </h3>
@@ -52,14 +62,20 @@ export function RevenueByLocation() {
               {/* Location Name and Revenue */}
               <div className="flex justify-between items-center">
                 <span
-                  className="text-xs font-normal text-[#1C1C1C]"
-                  style={{ fontSize: "12px" }}
+                  className="text-xs font-normal"
+                  style={{
+                    fontSize: "12px",
+                    color: isDark ? "#f8fafc" : "#1C1C1C",
+                  }}
                 >
                   {location.name}
                 </span>
                 <span
-                  className="text-xs font-normal text-[#1C1C1C]"
-                  style={{ fontSize: "12px" }}
+                  className="text-xs font-normal"
+                  style={{
+                    fontSize: "12px",
+                    color: isDark ? "#f8fafc" : "#1C1C1C",
+                  }}
                 >
                   {location.revenue}
                 </span>
@@ -70,7 +86,7 @@ export function RevenueByLocation() {
                 className="w-full rounded-full"
                 style={{
                   height: "4px",
-                  backgroundColor: "#FFFFFF",
+                  backgroundColor: isDark ? "#0f172a" : "#FFFFFF",
                   padding:
                     location.name === "New York"
                       ? "0px 40px 0px 0px"

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/theme-provider";
 
 const products = [
   {
@@ -29,6 +30,9 @@ const products = [
 ];
 
 export function TopProducts() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,14 +40,16 @@ export function TopProducts() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl p-6"
       style={{
-        backgroundColor: "#F7F9FB",
-        border: "1px solid rgba(28, 28, 28, 0.1)",
+        backgroundColor: isDark ? "rgba(255, 255, 255, 0.05)" : "#F7F9FB",
+        border: isDark 
+          ? "1px solid rgba(255, 255, 255, 0.1)" 
+          : "1px solid rgba(28, 28, 28, 0.1)",
       }}
     >
       <div className="flex flex-col gap-4">
         {/* Title */}
         <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-[#1C1C1C]">
+          <h3 className={`text-sm font-semibold ${isDark ? "text-white" : "text-[#1C1C1C]"}`}>
             Top Selling Products
           </h3>
         </div>
@@ -54,29 +60,29 @@ export function TopProducts() {
             <thead>
               <tr
                 className="border-b"
-                style={{ borderColor: "rgba(28, 28, 28, 0.1)" }}
+                style={{ borderColor: isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(28, 28, 28, 0.1)" }}
               >
                 <th
                   className="pb-3 text-left text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  style={{ color: isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(28, 28, 28, 0.4)" }}
                 >
                   Name
                 </th>
                 <th
                   className="pb-3 text-left text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  style={{ color: isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(28, 28, 28, 0.4)" }}
                 >
                   Price
                 </th>
                 <th
                   className="pb-3 text-left text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  style={{ color: isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(28, 28, 28, 0.4)" }}
                 >
                   Quantity
                 </th>
                 <th
                   className="pb-3 text-right text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "rgba(28, 28, 28, 0.4)" }}
+                  style={{ color: isDark ? "rgba(255, 255, 255, 0.4)" : "rgba(28, 28, 28, 0.4)" }}
                 >
                   Amount
                 </th>
@@ -90,18 +96,18 @@ export function TopProducts() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className="border-b"
-                  style={{ borderColor: "rgba(28, 28, 28, 0.1)" }}
+                  style={{ borderColor: isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(28, 28, 28, 0.1)" }}
                 >
-                  <td className="py-3 text-sm font-normal text-[#1C1C1C]">
+                  <td className={`py-3 text-sm font-normal ${isDark ? "text-white" : "text-[#1C1C1C]"}`}>
                     {product.name}
                   </td>
-                  <td className="py-3 text-sm font-normal text-[#1C1C1C]">
+                  <td className={`py-3 text-sm font-normal ${isDark ? "text-white" : "text-[#1C1C1C]"}`}>
                     {product.price}
                   </td>
-                  <td className="py-3 text-sm font-normal text-[#1C1C1C]">
+                  <td className={`py-3 text-sm font-normal ${isDark ? "text-white" : "text-[#1C1C1C]"}`}>
                     {product.quantity}
                   </td>
-                  <td className="py-3 text-right text-sm font-normal text-[#1C1C1C]">
+                  <td className={`py-3 text-right text-sm font-normal ${isDark ? "text-white" : "text-[#1C1C1C]"}`}>
                     {product.amount}
                   </td>
                 </motion.tr>

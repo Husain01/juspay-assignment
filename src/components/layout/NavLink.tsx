@@ -19,8 +19,8 @@ export function NavLink({ icon: Icon, label, active, onClick }: NavLinkProps) {
       className={cn(
         "relative w-full flex items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors",
         active
-          ? "bg-[#1C1C1C] text-white"
-          : "text-[#1C1C1C] hover:bg-[rgba(28,28,28,0.05)]"
+          ? "bg-accent text-accent-foreground"
+          : "text-foreground hover:bg-accent"
       )}
     >
       <Icon className="h-4 w-4" />

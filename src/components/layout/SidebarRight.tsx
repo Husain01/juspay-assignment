@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Bug, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "./PageLayout";
+import { useTheme } from "@/components/theme-provider";
 
 const notifications = [
   {
@@ -83,6 +84,8 @@ const contacts = [
 
 export function SidebarRight() {
   const { rightSidebarOpen } = useSidebar();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
     <AnimatePresence mode="wait">
@@ -96,17 +99,16 @@ export function SidebarRight() {
             ease: [0.4, 0.0, 0.2, 1],
             type: "tween",
           }}
-          className="h-full overflow-hidden sticky top-0"
-          style={{ borderLeft: "1px solid rgba(28, 28, 28, 0.1)" }}
+          className="h-full overflow-hidden sticky top-0 border-l border-border"
         >
           <motion.div
-            className="h-full bg-white"
+            className="h-full bg-background"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
-            <h3 className="h-16  flex items-center px-6 text-sm font-semibold text-[#1C1C1C]">
+            <h3 className="h-16 flex items-center px-6 text-sm font-semibold text-foreground">
               Notifications
             </h3>
             <div className="space-y-6 p-4 overflow-y-auto max-h-[calc(100vh-64px)]">
@@ -117,22 +119,23 @@ export function SidebarRight() {
                     <motion.div
                       key={notification.id}
                       whileHover={{ scale: 1.02 }}
-                      className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-[rgba(28,28,28,0.05)]"
+                      className="flex items-start gap-3 rounded-lg p-2 transition-colors hover:bg-accent"
                     >
                       <div
                         className="flex h-8 w-8 items-center justify-center rounded-lg"
                         style={{ backgroundColor: notification.bgColor }}
                       >
-                        <notification.icon className="h-4 w-4 text-[#1C1C1C]" />
+                        <notification.icon
+                          className={`h-4 w-4 ${
+                            isDark ? "text-black" : "text-foreground"
+                          }`}
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-normal text-[#1C1C1C] leading-tight">
+                        <p className="text-sm font-normal leading-tight text-foreground">
                           {notification.title}
                         </p>
-                        <p
-                          className="text-xs font-normal mt-1"
-                          style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                        >
+                        <p className="text-xs font-normal mt-1 text-muted-foreground">
                           {notification.time}
                         </p>
                       </div>
@@ -143,18 +146,15 @@ export function SidebarRight() {
 
               {/* Activities Section */}
               <div>
-                <h3 className="text-sm font-semibold text-[#1C1C1C] mb-4">
+                <h3 className="text-sm font-semibold mb-4 text-foreground">
                   Activities
                 </h3>
                 <div className="relative">
                   {/* Timeline line */}
-                  <div
-                    className="absolute left-4 top-0 bottom-0 w-px"
-                    style={{ backgroundColor: "rgba(28, 28, 28, 0.1)" }}
-                  />
+                  <div className="absolute left-4 top-0 bottom-0 w-px bg-border" />
 
                   <div className="space-y-3">
-                    {activities.map((activity, index) => (
+                    {activities.map((activity) => (
                       <motion.div
                         key={activity.id}
                         whileHover={{ scale: 1.02 }}
@@ -162,10 +162,10 @@ export function SidebarRight() {
                       >
                         {/* Avatar with timeline connection */}
                         <div className="relative flex-shrink-0">
-                          <div className="h-8 w-8 rounded-full flex items-center justify-center bg-white">
+                          <div className="h-8 w-8 rounded-full flex items-center justify-center bg-card">
                             <Avatar className="h-6 w-6">
                               <AvatarImage src={activity.avatar} />
-                              <AvatarFallback className="text-xs text-white">
+                              <AvatarFallback className="text-xs text-card-foreground">
                                 U
                               </AvatarFallback>
                             </Avatar>
@@ -174,13 +174,10 @@ export function SidebarRight() {
 
                         {/* Activity content */}
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-normal text-[#1C1C1C] leading-tight">
+                          <p className="text-sm font-normal leading-tight text-foreground">
                             {activity.user}
                           </p>
-                          <p
-                            className="text-xs font-normal mt-1"
-                            style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                          >
+                          <p className="text-xs font-normal mt-1 text-muted-foreground">
                             {activity.time}
                           </p>
                         </div>
@@ -193,7 +190,7 @@ export function SidebarRight() {
               {/* Contacts Section */}
               <div className="flex flex-col gap-2">
                 <div className="px-1 py-2">
-                  <h3 className="text-sm font-semibold text-[#1C1C1C]">
+                  <h3 className="text-sm font-semibold text-foreground">
                     Contacts
                   </h3>
                 </div>
@@ -207,12 +204,12 @@ export function SidebarRight() {
                       <div className="flex items-center justify-center">
                         <Avatar className="h-6 w-6 rounded-full">
                           <AvatarImage src={contact.avatar} />
-                          <AvatarFallback className="text-xs">
+                          <AvatarFallback className="text-xs text-card-foreground">
                             {contact.name.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                       </div>
-                      <p className="text-sm font-normal text-[#1C1C1C]">
+                      <p className="text-sm font-normal text-foreground">
                         {contact.name}
                       </p>
                     </motion.div>

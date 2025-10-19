@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { useTheme } from "@/components/theme-provider";
 
 interface StatCardProps {
   title: string;
@@ -16,36 +17,81 @@ export function StatCard({
   iconBgColor,
   isPositive,
 }: StatCardProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
       className="rounded-2xl p-6"
       style={{
-        backgroundColor: iconBgColor,
-        border: "1px solid rgba(28, 28, 28, 0.1)",
+        backgroundColor:
+          isDark && iconBgColor === "#F7F9FB"
+            ? "rgba(255, 255, 255, 0.05)"
+            : iconBgColor,
+        border:
+          isDark && iconBgColor === "#F7F9FB"
+            ? "1px solid rgba(255, 255, 255, 0.1)"
+            : "1px solid rgba(28, 28, 28, 0.1)",
       }}
     >
       <div className="flex flex-col gap-2">
         {/* Title */}
         <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-[#1C1C1C]">{title}</h3>
+          <h3
+            className={`text-sm font-semibold ${
+              isDark && iconBgColor === "#F7F9FB"
+                ? "text-white"
+                : "text-[#1C1C1C]"
+            }`}
+          >
+            {title}
+          </h3>
         </div>
 
         {/* Value and Change Row */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <h2 className="text-2xl font-semibold text-[#1C1C1C]">{value}</h2>
+            <h2
+              className={`text-2xl font-semibold ${
+                isDark && iconBgColor === "#F7F9FB"
+                  ? "text-white"
+                  : "text-[#1C1C1C]"
+              }`}
+            >
+              {value}
+            </h2>
           </div>
 
           {/* Change with Icon */}
           <div className="flex items-center gap-1">
             {isPositive ? (
-              <TrendingUp className="h-4 w-4 text-[#1C1C1C]" />
+              <TrendingUp
+                className={`h-4 w-4 ${
+                  isDark && iconBgColor === "#F7F9FB"
+                    ? "text-white"
+                    : "text-[#1C1C1C]"
+                }`}
+              />
             ) : (
-              <TrendingDown className="h-4 w-4 text-[#1C1C1C]" />
+              <TrendingDown
+                className={`h-4 w-4 ${
+                  isDark && iconBgColor === "#F7F9FB"
+                    ? "text-white"
+                    : "text-[#1C1C1C]"
+                }`}
+              />
             )}
-            <span className="text-xs font-normal text-[#1C1C1C]">{change}</span>
+            <span
+              className={`text-xs font-normal ${
+                isDark && iconBgColor === "#F7F9FB"
+                  ? "text-white"
+                  : "text-[#1C1C1C]"
+              }`}
+            >
+              {change}
+            </span>
           </div>
         </div>
       </div>

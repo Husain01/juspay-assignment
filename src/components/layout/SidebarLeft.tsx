@@ -52,21 +52,17 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
             ease: [0.4, 0.0, 0.2, 1],
             type: "tween",
           }}
-          className="h-full overflow-hidden sticky top-0"
-          style={{ borderRight: "1px solid rgba(28, 28, 28, 0.1)" }}
+          className="h-full overflow-hidden sticky top-0 border-r border-border"
         >
           <motion.div
-            className="h-full bg-white flex flex-col"
+            className="h-full flex flex-col bg-background"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ delay: 0.1, duration: 0.3 }}
           >
             {/* User Profile Section - Outside padding */}
-            <div
-              className="px-4"
-              style={{ borderColor: "rgba(28, 28, 28, 0.1)" }}
-            >
+            <div className="px-4 ">
               <div className="flex h-16 items-center gap-3">
                 <div className="relative">
                   {/* Outer light blue ring */}
@@ -89,7 +85,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                     </div>
                   </div>
                 </div>
-                <span className="text-sm font-normal text-[#1C1C1C]">
+                <span className="text-sm font-normal text-foreground">
                   ByeWind
                 </span>
               </div>
@@ -99,23 +95,20 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Favorites Section */}
               <div className="mb-3">
                 <div className="mb-3 flex items-center justify-between">
-                  <button className="text-sm font-normal text-[#1C1C1C]">
+                  <button className="text-sm font-normal text-foreground">
                     Favorites
                   </button>
-                  <button
-                    className="text-sm font-normal"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <button className="text-sm font-normal text-muted-foreground">
                     Recently
                   </button>
                 </div>
                 <div className="mb-3 space-y-0">
-                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal text-[#1C1C1C] transition-colors hover:bg-[rgba(28,28,28,0.05)]">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#1C1C1C]" />
+                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors hover:bg-accent text-foreground">
+                    <div className="h-1.5 w-1.5 rounded-full bg-foreground" />
                     <span>Overview</span>
                   </div>
-                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal text-[#1C1C1C] transition-colors hover:bg-[rgba(28,28,28,0.05)]">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[#1C1C1C]" />
+                  <div className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm font-normal transition-colors hover:bg-accent text-foreground">
+                    <div className="h-1.5 w-1.5 rounded-full bg-foreground" />
                     <span>Projects</span>
                   </div>
                 </div>
@@ -124,10 +117,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Dashboards Section */}
               <div className="mb-3">
                 <div className="mb-1 px-3 py-1">
-                  <p
-                    className="text-xs font-semibold uppercase tracking-wider"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Dashboards
                   </p>
                 </div>
@@ -149,10 +139,7 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
               {/* Pages Section */}
               <div>
                 <div className="mb-1 px-3 py-1">
-                  <p
-                    className="text-xs font-semibold uppercase tracking-wider"
-                    style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                  >
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     Pages
                   </p>
                 </div>
@@ -167,30 +154,6 @@ export function SidebarLeft({ currentPage, onNavigate }: SidebarLeftProps) {
                     />
                   ))}
                 </div>
-              </div>
-            </div>
-
-            {/* Footer - Upgrade to Pro */}
-            <div
-              className="border-t p-4"
-              style={{ borderColor: "rgba(28, 28, 28, 0.1)" }}
-            >
-              <div
-                className="rounded-lg p-4 mx-0"
-                style={{ backgroundColor: "rgba(28, 28, 28, 0.05)" }}
-              >
-                <p className="text-sm font-medium text-[#1C1C1C]">
-                  Upgrade to Pro
-                </p>
-                <p
-                  className="mt-1 text-xs"
-                  style={{ color: "rgba(28, 28, 28, 0.4)" }}
-                >
-                  Get 1 month free and unlock all features
-                </p>
-                <button className="mt-3 w-full rounded-md bg-[#1C1C1C] px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[#1C1C1C]/90">
-                  Upgrade
-                </button>
               </div>
             </div>
           </motion.div>

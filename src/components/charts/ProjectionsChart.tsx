@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useTheme } from "@/components/theme-provider";
 
 const data = [
   { month: "Jan", actuals: 16, projections: 4 },
@@ -19,6 +20,9 @@ const data = [
 ];
 
 export function ProjectionsChart() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -26,14 +30,20 @@ export function ProjectionsChart() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl p-4 w-full h-full"
       style={{
-        backgroundColor: "#F7F9FB",
-        border: "1px solid rgba(28, 28, 28, 0.1)",
+        backgroundColor: isDark ? "rgba(255, 255, 255, 0.05)" : "#F7F9FB",
+        border: isDark
+          ? "1px solid rgba(255, 255, 255, 0.1)"
+          : "1px solid rgba(28, 28, 28, 0.1)",
       }}
     >
       <div className="flex flex-col gap-2 h-full">
         {/* Title */}
         <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-[#1C1C1C]">
+          <h3
+            className={`text-sm font-semibold ${
+              isDark ? "text-white" : "text-[#1C1C1C]"
+            }`}
+          >
             Projections vs Actuals
           </h3>
         </div>
@@ -57,7 +67,9 @@ export function ProjectionsChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "rgba(28, 28, 28, 0.4)",
+                  fill: isDark
+                    ? "rgba(255, 255, 255, 0.4)"
+                    : "rgba(28, 28, 28, 0.4)",
                   fontSize: 12,
                   fontWeight: 400,
                 }}
@@ -67,7 +79,9 @@ export function ProjectionsChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "rgba(28, 28, 28, 0.4)",
+                  fill: isDark
+                    ? "rgba(255, 255, 255, 0.4)"
+                    : "rgba(28, 28, 28, 0.4)",
                   fontSize: 12,
                   fontWeight: 400,
                 }}

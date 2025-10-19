@@ -8,7 +8,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState<"home" | "orders">("home");
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="juspay-ui-theme">
+    <ThemeProvider defaultTheme="system" storageKey="juspay-ui-theme">
       <PageLayout currentPage={currentPage} onNavigate={setCurrentPage}>
         {currentPage === "home" ? <HomePage /> : <OrdersPage />}
       </PageLayout>

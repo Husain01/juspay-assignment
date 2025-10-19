@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { useState } from "react";
+import { useTheme } from "@/components/theme-provider";
 
 // Exact data from Figma design
 const data = [
@@ -11,15 +11,9 @@ const data = [
 ];
 
 export function OrdersChart() {
-  const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
+  const { theme } = useTheme();
 
-  const handleMouseEnter = (data: any, index: number) => {
-    setHoveredSegment(index);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredSegment(null);
-  };
+  const isDark = theme === "dark";
 
   return (
     <motion.div
@@ -28,17 +22,23 @@ export function OrdersChart() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl w-full h-full"
       style={{
-        backgroundColor: "#F7F9FB", // fill_EQKIYY
-        border: "1px solid rgba(28, 28, 28, 0.1)",
+        backgroundColor: isDark ? "rgba(255, 255, 255, 0.05)" : "#F7F9FB", // Dark: semi-transparent white, Light: fill_EQKIYY
+        border: isDark
+          ? "1px solid rgba(255, 255, 255, 0.1)"
+          : "1px solid rgba(28, 28, 28, 0.1)",
         padding: "24px", // layout_9C8NXP padding
       }}
     >
       <div className="flex flex-col items-center gap-4 h-full">
-        {/* Title - Exact Figma styling */}
+        {/* Title - Theme-aware styling */}
         <div className="flex flex-col">
           <h3
-            className="text-sm font-semibold text-[#1C1C1C]"
-            style={{ fontSize: "14px", fontWeight: 600 }}
+            className="text-sm font-semibold"
+            style={{
+              fontSize: "14px",
+              fontWeight: 600,
+              color: isDark ? "#f8fafc" : "#1C1C1C",
+            }}
           >
             Total Sales
           </h3>
@@ -65,12 +65,7 @@ export function OrdersChart() {
                   endAngle={-270}
                 >
                   {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={entry.color}
-                      onMouseEnter={() => handleMouseEnter(entry, index)}
-                      onMouseLeave={handleMouseLeave}
-                    />
+                    <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -121,15 +116,23 @@ export function OrdersChart() {
                     }}
                   />
                   <span
-                    className="text-xs font-normal text-[#1C1C1C]"
-                    style={{ fontSize: "12px", fontWeight: 400 }}
+                    className="text-xs font-normal"
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: 400,
+                      color: isDark ? "#f8fafc" : "#1C1C1C",
+                    }}
                   >
                     {item.name}
                   </span>
                 </div>
                 <span
-                  className="text-xs font-normal text-[#1C1C1C] flex-shrink-0"
-                  style={{ fontSize: "12px", fontWeight: 400 }}
+                  className="text-xs font-normal flex-shrink-0"
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    color: isDark ? "#f8fafc" : "#1C1C1C",
+                  }}
                 >
                   ${item.value.toFixed(2)}
                 </span>

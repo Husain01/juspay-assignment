@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import {
   LineChart,
   Line,
@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   ResponsiveContainer,
 } from "recharts";
+import { useTheme } from "@/components/theme-provider";
 
 // Exact data from Figma analysis
 const data = [
@@ -19,6 +20,9 @@ const data = [
 ];
 
 export function RevenueChart() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -26,11 +30,11 @@ export function RevenueChart() {
       transition={{ duration: 0.5 }}
       className="rounded-2xl w-full h-full col-span-3 col-start-1"
       style={{
-        backgroundColor: "#F7F9FB", // fill_NTW6P5
-        border: "1px solid rgba(28, 28, 28, 0.1)",
-        padding: "24px", // layout_AZW9ST padding
-        // width: "662px", // layout_AZW9ST width
-        // height: "318px", // layout_AZW9ST height
+        backgroundColor: isDark ? "rgba(255, 255, 255, 0.05)" : "#F7F9FB",
+        border: isDark
+          ? "1px solid rgba(255, 255, 255, 0.1)"
+          : "1px solid rgba(28, 28, 28, 0.1)",
+        padding: "24px",
       }}
     >
       <div className="flex flex-col gap-4 h-full">
@@ -39,8 +43,12 @@ export function RevenueChart() {
           {/* Title */}
           <div className="flex flex-col">
             <h3
-              className="text-sm font-semibold text-[#1C1C1C]"
-              style={{ fontSize: "14px", fontWeight: 600 }}
+              className="text-sm font-semibold"
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: isDark ? "#f8fafc" : "#1C1C1C",
+              }}
             >
               Revenue
             </h3>
@@ -49,7 +57,12 @@ export function RevenueChart() {
           {/* Separator */}
           <span
             className="text-sm font-normal"
-            style={{ color: "rgba(28, 28, 28, 0.2)", fontSize: "14px" }}
+            style={{
+              color: isDark
+                ? "rgba(248, 250, 252, 0.2)"
+                : "rgba(28, 28, 28, 0.2)",
+              fontSize: "14px",
+            }}
           >
             |
           </span>
@@ -59,10 +72,16 @@ export function RevenueChart() {
             className="flex items-center gap-2"
             style={{ padding: "2px 8px 2px 4px" }}
           >
-            <div className="w-4 h-4 bg-[#1C1C1C] rounded-full"></div>
+            <div
+              className="w-4 h-4 rounded-full"
+              style={{ backgroundColor: isDark ? "#f8fafc" : "#1C1C1C" }}
+            ></div>
             <span
-              className="text-xs font-normal text-[#1C1C1C]"
-              style={{ fontSize: "12px" }}
+              className="text-xs font-normal"
+              style={{
+                fontSize: "12px",
+                color: isDark ? "#f8fafc" : "#1C1C1C",
+              }}
             >
               Current Week <span className="font-semibold">$58,211</span>
             </span>
@@ -75,8 +94,11 @@ export function RevenueChart() {
           >
             <div className="w-4 h-4 bg-[#A8C5DA] rounded-full"></div>
             <span
-              className="text-xs font-normal text-[#1C1C1C]"
-              style={{ fontSize: "12px" }}
+              className="text-xs font-normal"
+              style={{
+                fontSize: "12px",
+                color: isDark ? "#f8fafc" : "#1C1C1C",
+              }}
             >
               Previous Week <span className="font-semibold">$68,768</span>
             </span>
@@ -92,7 +114,11 @@ export function RevenueChart() {
             >
               <CartesianGrid
                 strokeDasharray="1 1"
-                stroke="rgba(28, 28, 28, 0.05)"
+                stroke={
+                  isDark
+                    ? "rgba(248, 250, 252, 0.05)"
+                    : "rgba(28, 28, 28, 0.05)"
+                }
                 vertical={false}
                 horizontal={true}
               />
@@ -101,7 +127,9 @@ export function RevenueChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "rgba(28, 28, 28, 0.4)",
+                  fill: isDark
+                    ? "rgba(248, 250, 252, 0.4)"
+                    : "rgba(28, 28, 28, 0.4)",
                   fontSize: 12,
                   fontWeight: 400,
                 }}
@@ -111,7 +139,9 @@ export function RevenueChart() {
                 axisLine={false}
                 tickLine={false}
                 tick={{
-                  fill: "rgba(28, 28, 28, 0.4)",
+                  fill: isDark
+                    ? "rgba(248, 250, 252, 0.4)"
+                    : "rgba(28, 28, 28, 0.4)",
                   fontSize: 12,
                   fontWeight: 400,
                 }}
@@ -122,15 +152,15 @@ export function RevenueChart() {
               <Line
                 type="monotone"
                 dataKey="currentWeek"
-                stroke="#1C1C1C"
+                stroke={isDark ? "#f8fafc" : "#1C1C1C"}
                 strokeWidth={3}
                 dot={{
-                  fill: "#FFFFFF",
-                  stroke: "#1C1C1C",
+                  fill: isDark ? "#1e293b" : "#FFFFFF",
+                  stroke: isDark ? "#f8fafc" : "#1C1C1C",
                   strokeWidth: 1,
                   r: 4,
                 }}
-                activeDot={{ r: 6, fill: "#1C1C1C" }}
+                activeDot={{ r: 6, fill: isDark ? "#f8fafc" : "#1C1C1C" }}
                 connectNulls={false}
               />
               <Line

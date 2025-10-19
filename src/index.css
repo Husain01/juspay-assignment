@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 /* Import Inter font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 @theme {
   --font-sans: Inter, system-ui, sans-serif;
-  
+
   /* Light mode colors */
   --color-background: #ffffff;
   --color-foreground: #09090b;
@@ -26,53 +26,30 @@
   --color-border: #e2e8f0;
   --color-input: #e2e8f0;
   --color-ring: #3b82f6;
-  
+
   --radius: 0.5rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #09090b;
-    --color-foreground: #f8fafc;
-    --color-card: #09090b;
-    --color-card-foreground: #f8fafc;
-    --color-popover: #09090b;
-    --color-popover-foreground: #f8fafc;
-    --color-primary: #60a5fa;
-    --color-primary-foreground: #0f172a;
-    --color-secondary: #1e293b;
-    --color-secondary-foreground: #f8fafc;
-    --color-muted: #1e293b;
-    --color-muted-foreground: #94a3b8;
-    --color-accent: #1e293b;
-    --color-accent-foreground: #f8fafc;
-    --color-destructive: #7f1d1d;
-    --color-destructive-foreground: #f8fafc;
-    --color-border: #1e293b;
-    --color-input: #1e293b;
-    --color-ring: #3b82f6;
-  }
-}
-
+/* Dark theme colors - applied when .dark class is present */
 .dark {
-  --color-background: #09090b;
-  --color-foreground: #f8fafc;
-  --color-card: #09090b;
-  --color-card-foreground: #f8fafc;
-  --color-popover: #09090b;
-  --color-popover-foreground: #f8fafc;
-  --color-primary: #60a5fa;
-  --color-primary-foreground: #0f172a;
-  --color-secondary: #1e293b;
-  --color-secondary-foreground: #f8fafc;
-  --color-muted: #1e293b;
-  --color-muted-foreground: #94a3b8;
-  --color-accent: #1e293b;
-  --color-accent-foreground: #f8fafc;
-  --color-destructive: #7f1d1d;
-  --color-destructive-foreground: #f8fafc;
-  --color-border: #1e293b;
-  --color-input: #1e293b;
+  --color-background: #1c1c1c;
+  --color-foreground: #ffffff;
+  --color-card: rgba(255, 255, 255, 0.05);
+  --color-card-foreground: #ffffff;
+  --color-popover: #1c1c1c;
+  --color-popover-foreground: #ffffff;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: rgba(255, 255, 255, 0.1);
+  --color-secondary-foreground: #ffffff;
+  --color-muted: rgba(255, 255, 255, 0.1);
+  --color-muted-foreground: rgba(255, 255, 255, 0.4);
+  --color-accent: rgba(255, 255, 255, 0.1);
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-input: rgba(255, 255, 255, 0.1);
   --color-ring: #3b82f6;
 }
 
