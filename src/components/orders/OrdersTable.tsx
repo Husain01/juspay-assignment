@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 import {
   Table,
   TableBody,
@@ -6,22 +6,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { Order } from '@/store/useStore'
-import { MoreHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/table";
+import { Order } from "@/store/useStore";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface OrdersTableProps {
-  orders: Order[]
+  orders: Order[];
 }
 
 const statusColors: Record<string, string> = {
-  Completed: 'bg-green-500/10 text-green-600 dark:text-green-400',
-  Pending: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
-  Cancelled: 'bg-red-500/10 text-red-600 dark:text-red-400',
-  Shipped: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-  Processing: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
-}
+  Complete: "bg-green-500/10 text-green-600 dark:text-green-400",
+  Pending: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400",
+  Rejected: "bg-red-500/10 text-red-600 dark:text-red-400",
+  "In Progress": "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+  Approved: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+};
 
 export function OrdersTable({ orders }: OrdersTableProps) {
   if (orders.length === 0) {
@@ -29,20 +29,20 @@ export function OrdersTable({ orders }: OrdersTableProps) {
       <div className="flex h-[400px] items-center justify-center">
         <p className="text-muted-foreground">No orders found</p>
       </div>
-    )
+    );
   }
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Order Number</TableHead>
+          <TableHead>Order ID</TableHead>
           <TableHead>Date</TableHead>
           <TableHead>Customer</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Amount</TableHead>
-          <TableHead>Items</TableHead>
-          <TableHead>Payment</TableHead>
+          <TableHead>Project</TableHead>
+          <TableHead>Address</TableHead>
+          <TableHead>Actions</TableHead>
           <TableHead className="w-[50px]"></TableHead>
         </TableRow>
       </TableHeader>
@@ -55,9 +55,11 @@ export function OrdersTable({ orders }: OrdersTableProps) {
             transition={{ delay: index * 0.05 }}
             className="group border-b transition-colors hover:bg-muted/50"
           >
-            <TableCell className="font-medium">{order.orderNumber}</TableCell>
-            <TableCell className="text-muted-foreground">{order.date}</TableCell>
-            <TableCell>{order.customer}</TableCell>
+            <TableCell className="font-medium">{order.orderId}</TableCell>
+            <TableCell className="text-muted-foreground">
+              {order.date}
+            </TableCell>
+            <TableCell>{order.user.name}</TableCell>
             <TableCell>
               <span
                 className={`inline-block rounded-full px-2.5 py-1 text-xs font-medium ${
@@ -67,12 +69,12 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                 {order.status}
               </span>
             </TableCell>
-            <TableCell className="font-medium">
-              ${order.amount.toLocaleString()}
-            </TableCell>
-            <TableCell className="text-muted-foreground">{order.items}</TableCell>
+            <TableCell className="font-medium">{order.project}</TableCell>
             <TableCell className="text-muted-foreground">
-              {order.paymentMethod}
+              {order.address}
+            </TableCell>
+            <TableCell className="text-muted-foreground">
+              View Details
             </TableCell>
             <TableCell>
               <Button
@@ -87,6 +89,5 @@ export function OrdersTable({ orders }: OrdersTableProps) {
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }
-
