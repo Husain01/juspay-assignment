@@ -73,12 +73,12 @@ const activities = [
 ];
 
 const contacts = [
-  { id: 1, name: "Natali Craig", avatar: "/avatar-female05.png" },
-  { id: 2, name: "Drew Cano", avatar: "/avatar-male07.png" },
-  { id: 3, name: "Orlando Diggs", avatar: "/avatar-male11.png" },
-  { id: 4, name: "Andi Lane", avatar: "/avatar-3d05.png" },
-  { id: 5, name: "Kate Morrison", avatar: "/avatar-3d08.png" },
-  { id: 6, name: "Koray Okumus", avatar: "/avatar-male07.png" },
+  { id: 1, name: "Natali Craig", avatar: "/natali-craig.png" },
+  { id: 2, name: "Drew Cano", avatar: "/drew-cano.png" },
+  { id: 3, name: "Orlando Diggs", avatar: "/orlando-diggs.png" },
+  { id: 4, name: "Andi Lane", avatar: "/andi-lane.png" },
+  { id: 5, name: "Kate Morrison", avatar: "/kate-morrison.png" },
+  { id: 6, name: "Koray Okumus", avatar: "/koray-okumus.png" },
 ];
 
 export function SidebarRight() {
@@ -191,27 +191,29 @@ export function SidebarRight() {
               </div>
 
               {/* Contacts Section */}
-              <div>
-                <div className="flex items-center justify-between mb-3">
+              <div className="flex flex-col gap-2">
+                <div className="px-1 py-2">
                   <h3 className="text-sm font-semibold text-[#1C1C1C]">
                     Contacts
                   </h3>
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="flex flex-col gap-2">
                   {contacts.map((contact) => (
                     <motion.div
                       key={contact.id}
-                      whileHover={{ scale: 1.05 }}
-                      className="flex flex-col items-center gap-1"
+                      whileHover={{ scale: 1.02 }}
+                      className="flex items-center gap-2 p-1"
                     >
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage src={contact.avatar} />
-                        <AvatarFallback className="text-sm">
-                          {contact.name.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <p className="text-xs font-normal text-[#1C1C1C] mt-1 text-center">
-                        {contact.name.split(" ")[0]}
+                      <div className="flex items-center justify-center">
+                        <Avatar className="h-6 w-6 rounded-full">
+                          <AvatarImage src={contact.avatar} />
+                          <AvatarFallback className="text-xs">
+                            {contact.name.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <p className="text-sm font-normal text-[#1C1C1C]">
+                        {contact.name}
                       </p>
                     </motion.div>
                   ))}
