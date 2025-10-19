@@ -10,13 +10,12 @@ import {
 } from "recharts";
 
 const data = [
-  { day: "Mon", currentWeek: 8500, previousWeek: 9800 },
-  { day: "Tue", currentWeek: 9200, previousWeek: 10200 },
-  { day: "Wed", currentWeek: 7800, previousWeek: 9500 },
-  { day: "Thu", currentWeek: 8800, previousWeek: 9200 },
-  { day: "Fri", currentWeek: 7600, previousWeek: 10100 },
-  { day: "Sat", currentWeek: 7200, previousWeek: 8900 },
-  { day: "Sun", currentWeek: 8100, previousWeek: 9300 },
+  { month: "Jan", currentWeek: 8500, previousWeek: 9800 },
+  { month: "Feb", currentWeek: 9200, previousWeek: 10200 },
+  { month: "Mar", currentWeek: 7800, previousWeek: 9500 },
+  { month: "Apr", currentWeek: 8800, previousWeek: 9200 },
+  { month: "May", currentWeek: 7600, previousWeek: 10100 },
+  { month: "Jun", currentWeek: 7200, previousWeek: 8900 },
 ];
 
 export function RevenueChart() {
@@ -25,80 +24,106 @@ export function RevenueChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-2xl bg-white p-6"
-      style={{ border: "1px solid rgba(28, 28, 28, 0.1)" }}
+      className="rounded-2xl p-6"
+      style={{
+        backgroundColor: "#F7F9FB",
+        border: "1px solid rgba(28, 28, 28, 0.1)",
+      }}
     >
-      <div className="mb-6">
-        <h3 className="text-base font-semibold text-[#1C1C1C]">Revenue</h3>
-        <div className="mt-4 flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
-            <span
-              className="text-xs font-normal"
-              style={{ color: "rgba(28, 28, 28, 0.4)" }}
-            >
-              Current Week{" "}
-              <span className="font-semibold text-[#1C1C1C]">$58,211</span>
-            </span>
+      <div className="flex flex-col gap-4">
+        {/* Header with Title and Legend */}
+        <div className="flex flex-col gap-4">
+          {/* Title */}
+          <div className="flex flex-col">
+            <h3 className="text-sm font-semibold text-[#1C1C1C]">Revenue</h3>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-[#A8C5DA]" />
-            <span
-              className="text-xs font-normal"
-              style={{ color: "rgba(28, 28, 28, 0.4)" }}
-            >
-              Previous Week{" "}
-              <span className="font-semibold text-[#1C1C1C]">$68,768</span>
+
+          {/* Legend */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
+              <span className="text-xs font-normal text-[#1C1C1C]">
+                Current Week <span className="font-semibold">$58,211</span>
+              </span>
+            </div>
+            <span className="text-sm font-normal text-[rgba(28,28,28,0.2)]">
+              |
             </span>
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
+              <span className="text-xs font-normal text-[#1C1C1C]">
+                Previous Week <span className="font-semibold">$68,768</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Chart */}
+        <div className="flex flex-row gap-4">
+          {/* Left Text (Y-axis labels) */}
+          <div className="flex flex-col justify-between text-xs font-normal text-[rgba(28,28,28,0.4)]">
+            <div>30M</div>
+            <div>20M</div>
+            <div>10M</div>
+            <div>0</div>
+          </div>
+
+          {/* Chart Area */}
+          <div className="flex-1">
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={data}>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="rgba(28, 28, 28, 0.1)"
+                  vertical={false}
+                />
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
+                  tickFormatter={(value) => `${value / 1000}k`}
+                  domain={[0, 30000]}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid rgba(28, 28, 28, 0.1)",
+                    borderRadius: "8px",
+                    fontSize: "12px",
+                  }}
+                  formatter={(value: number) => [
+                    `$${value.toLocaleString()}`,
+                    "",
+                  ]}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="currentWeek"
+                  stroke="#1C1C1C"
+                  strokeWidth={3}
+                  dot={false}
+                  activeDot={{ r: 6 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="previousWeek"
+                  stroke="#1C1C1C"
+                  strokeWidth={3}
+                  strokeDasharray="3 10"
+                  dot={false}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={280}>
-        <LineChart data={data}>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="rgba(28, 28, 28, 0.1)"
-            vertical={false}
-          />
-          <XAxis
-            dataKey="day"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-          />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-            tickFormatter={(value) => `${value / 1000}k`}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#FFFFFF",
-              border: "1px solid rgba(28, 28, 28, 0.1)",
-              borderRadius: "8px",
-              fontSize: "12px",
-            }}
-            formatter={(value: number) => [`$${value.toLocaleString()}`, ""]}
-          />
-          <Line
-            type="monotone"
-            dataKey="currentWeek"
-            stroke="#1C1C1C"
-            strokeWidth={2}
-            dot={{ fill: "#1C1C1C", r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="previousWeek"
-            stroke="#A8C5DA"
-            strokeWidth={2}
-            dot={{ fill: "#A8C5DA", r: 4 }}
-            activeDot={{ r: 6 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
     </motion.div>
   );
 }

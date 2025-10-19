@@ -6,17 +6,16 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
 const data = [
-  { month: "Jan", projections: 20000000, actuals: 18000000 },
-  { month: "Feb", projections: 22000000, actuals: 20000000 },
-  { month: "Mar", projections: 25000000, actuals: 23000000 },
-  { month: "Apr", projections: 23000000, actuals: 21000000 },
-  { month: "May", projections: 28000000, actuals: 26000000 },
-  { month: "Jun", projections: 26000000, actuals: 24000000 },
+  { month: "Jan", actuals: 16, projections: 4 },
+  { month: "Feb", actuals: 20, projections: 5 },
+  { month: "Mar", actuals: 17, projections: 4 },
+  { month: "Apr", actuals: 21, projections: 6 },
+  { month: "May", actuals: 14, projections: 3 },
+  { month: "Jun", actuals: 19, projections: 5 },
 ];
 
 export function ProjectionsChart() {
@@ -25,67 +24,89 @@ export function ProjectionsChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-2xl bg-white p-6"
-      style={{ border: "1px solid rgba(28, 28, 28, 0.1)" }}
+      className="rounded-2xl p-4 w-full h-full"
+      style={{
+        backgroundColor: "#F7F9FB",
+        border: "1px solid rgba(28, 28, 28, 0.1)",
+      }}
     >
-      <div className="mb-6">
-        <h3 className="text-base font-semibold text-[#1C1C1C]">
-          Projections vs Actuals
-        </h3>
+      <div className="flex flex-col gap-2 h-full">
+        {/* Title */}
+        <div className="flex flex-col">
+          <h3 className="text-sm font-semibold text-[#1C1C1C]">
+            Projections vs Actuals
+          </h3>
+        </div>
+
+        {/* Chart */}
+        <div className="flex-1">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={data}
+              barGap={4}
+              margin={{ top: 10, right: 10, left: -20, bottom: -10 }}
+            >
+              <CartesianGrid
+                strokeDasharray="1 1"
+                stroke="rgba(28, 28, 28, 0.05)"
+                vertical={false}
+                horizontal={true}
+              />
+              <XAxis
+                dataKey="month"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "rgba(28, 28, 28, 0.4)",
+                  fontSize: 12,
+                  fontWeight: 400,
+                }}
+                interval={0}
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "rgba(28, 28, 28, 0.4)",
+                  fontSize: 12,
+                  fontWeight: 400,
+                }}
+                domain={[0, 30]}
+                tickFormatter={(value) => `${value}M`}
+                ticks={[0, 10, 20, 30]}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid rgba(28, 28, 28, 0.1)",
+                  borderRadius: "8px",
+                  fontSize: "12px",
+                  boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                }}
+                formatter={(value: number, name: string) => [
+                  `${value}M`,
+                  name === "actuals" ? "Actuals" : "Projections",
+                ]}
+              />
+              <Bar
+                dataKey="actuals"
+                stackId="a"
+                fill="#A8C5DA"
+                radius={[0, 0, 2, 2]}
+                maxBarSize={24}
+              />
+              <Bar
+                dataKey="projections"
+                stackId="a"
+                fill="#A8C5DA"
+                fillOpacity={0.5}
+                radius={[2, 2, 0, 0]}
+                maxBarSize={24}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} barGap={8}>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="rgba(28, 28, 28, 0.1)"
-            vertical={false}
-          />
-          <XAxis
-            dataKey="month"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-          />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-            tickFormatter={(value) => `${value / 1000000}M`}
-            domain={[0, 30000000]}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#FFFFFF",
-              border: "1px solid rgba(28, 28, 28, 0.1)",
-              borderRadius: "8px",
-              fontSize: "12px",
-            }}
-            formatter={(value: number) => [`${value}M`, ""]}
-          />
-          <Legend
-            wrapperStyle={{ paddingTop: "20px" }}
-            iconType="circle"
-            iconSize={8}
-            formatter={(value) => (
-              <span style={{ color: "#1C1C1C", fontSize: "12px" }}>
-                {value === "projections" ? "Projections" : "Actuals"}
-              </span>
-            )}
-          />
-          <Bar
-            dataKey="projections"
-            fill="#A8C5DA"
-            radius={[8, 8, 0, 0]}
-            barSize={20}
-          />
-          <Bar
-            dataKey="actuals"
-            fill="#1C1C1C"
-            radius={[8, 8, 0, 0]}
-            barSize={20}
-          />
-        </BarChart>
-      </ResponsiveContainer>
     </motion.div>
   );
 }

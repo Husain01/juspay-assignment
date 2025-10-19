@@ -80,7 +80,7 @@ export function AppSidebarInset({ children }: AppSidebarInsetProps) {
       </header>
       <div
         className="flex flex-1 flex-col gap-4 p-6 overflow-y-auto"
-        style={{ backgroundColor: "#F7F9FB", minHeight: "calc(100vh - 64px)" }}
+        style={{ backgroundColor: "#FFF", minHeight: "calc(100vh - 64px)" }}
       >
         {children}
       </div>

@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Users, ShoppingBag, DollarSign, TrendingUp } from "lucide-react";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { ProjectionsChart } from "@/components/charts/ProjectionsChart";
 import { RevenueChart } from "@/components/charts/RevenueChart";
@@ -12,8 +11,6 @@ const stats = [
     title: "Customers",
     value: "3,781",
     change: "+11.01%",
-    icon: Users,
-    iconColor: "#1C1C1C",
     iconBgColor: "#E3F5FF",
     isPositive: true,
   },
@@ -21,8 +18,6 @@ const stats = [
     title: "Orders",
     value: "1,219",
     change: "-0.03%",
-    icon: ShoppingBag,
-    iconColor: "#1C1C1C",
     iconBgColor: "#F7F9FB",
     isPositive: false,
   },
@@ -30,18 +25,14 @@ const stats = [
     title: "Revenue",
     value: "$695",
     change: "+15.03%",
-    icon: DollarSign,
-    iconColor: "#1C1C1C",
-    iconBgColor: "#E5ECF6",
+    iconBgColor: "#F7F9FB",
     isPositive: true,
   },
   {
     title: "Growth",
     value: "30.1%",
     change: "+6.08%",
-    icon: TrendingUp,
-    iconColor: "#1C1C1C",
-    iconBgColor: "#E3F5FF",
+    iconBgColor: "#E5ECF6",
     isPositive: true,
   },
 ];
@@ -76,46 +67,96 @@ export function HomePage() {
       animate="visible"
       className="space-y-6"
     >
-      {/* eCommerce Stats Grid */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <motion.div key={stat.title} variants={itemVariants}>
-            <StatCard
-              title={stat.title}
-              value={stat.value}
-              change={stat.change}
-              icon={stat.icon}
-              iconColor={stat.iconColor}
-              iconBgColor={stat.iconBgColor}
-              isPositive={stat.isPositive}
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Projections vs Actuals Chart */}
+      {/* eCommerce Heading */}
       <motion.div variants={itemVariants}>
-        <ProjectionsChart />
+        <h1 className="text-sm font-semibold text-[#1C1C1C] px-2 py-1">
+          eCommerce
+        </h1>
       </motion.div>
 
-      {/* Revenue & Total Sales Row */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <motion.div variants={itemVariants}>
-          <RevenueChart />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <OrdersChart />
-        </motion.div>
-      </div>
+      {/* Main Dashboard Grid - 4 columns */}
+      <div className="grid grid-cols-4 gap-7">
+        {/* First Row: Summary Cards (2x2 grid in first two columns) */}
+        <div className="col-span-2">
+          <div className="grid grid-cols-2 gap-7 h-full">
+            <motion.div variants={itemVariants} className="h-full">
+              <StatCard
+                title={stats[0].title}
+                value={stats[0].value}
+                change={stats[0].change}
+                iconBgColor={stats[0].iconBgColor}
+                isPositive={stats[0].isPositive}
+              />
+            </motion.div>
+            <motion.div variants={itemVariants} className="h-full">
+              <StatCard
+                title={stats[1].title}
+                value={stats[1].value}
+                change={stats[1].change}
+                iconBgColor={stats[1].iconBgColor}
+                isPositive={stats[1].isPositive}
+              />
+            </motion.div>
+            <motion.div variants={itemVariants} className="h-full">
+              <StatCard
+                title={stats[2].title}
+                value={stats[2].value}
+                change={stats[2].change}
+                iconBgColor={stats[2].iconBgColor}
+                isPositive={stats[2].isPositive}
+              />
+            </motion.div>
+            <motion.div variants={itemVariants} className="h-full">
+              <StatCard
+                title={stats[3].title}
+                value={stats[3].value}
+                change={stats[3].change}
+                iconBgColor={stats[3].iconBgColor}
+                isPositive={stats[3].isPositive}
+              />
+            </motion.div>
+          </div>
+        </div>
 
-      {/* Revenue by Location & Top Products Row */}
-      <div className="grid gap-6 md:grid-cols-2">
-        <motion.div variants={itemVariants}>
-          <RevenueByLocation />
-        </motion.div>
-        <motion.div variants={itemVariants}>
-          <TopProducts />
-        </motion.div>
+        {/* Second Row: Projections vs Actuals Chart (2 columns) */}
+        <div className="col-span-2">
+          <motion.div variants={itemVariants} className="h-full">
+            <ProjectionsChart />
+          </motion.div>
+        </div>
+        <div className="col-span-1">{/* Empty space */}</div>
+
+        {/* Third Row: Revenue Chart (3:1) */}
+        <div className="col-span-3">
+          <motion.div variants={itemVariants}>
+            <RevenueChart />
+          </motion.div>
+        </div>
+        <div className="col-span-1">{/* Empty space */}</div>
+
+        {/* Fourth Row: Revenue by Location (3:1) */}
+        <div className="col-span-3">
+          <motion.div variants={itemVariants}>
+            <RevenueByLocation />
+          </motion.div>
+        </div>
+        <div className="col-span-1">{/* Empty space */}</div>
+
+        {/* Fifth Row: Top Selling Products (3:1) */}
+        <div className="col-span-3">
+          <motion.div variants={itemVariants}>
+            <TopProducts />
+          </motion.div>
+        </div>
+        <div className="col-span-1">{/* Empty space */}</div>
+
+        {/* Sixth Row: Total Sales Donut Chart (3:1) */}
+        <div className="col-span-3">
+          <motion.div variants={itemVariants}>
+            <OrdersChart />
+          </motion.div>
+        </div>
+        <div className="col-span-1">{/* Empty space */}</div>
       </div>
     </motion.div>
   );
