@@ -157,7 +157,7 @@ export function OrderListPage() {
       />
 
       {/* Pagination */}
-      <div className="flex justify-center">
+      <div className="flex justify-end">
         <OrderListPagination
           currentPage={currentPage}
           totalPages={totalPages}
