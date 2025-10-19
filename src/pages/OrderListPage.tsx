@@ -1,12 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import {
-  Search,
-  Plus,
-  Filter,
-  ArrowUpDown,
-  MoreHorizontal,
-} from "lucide-react";
+import { Search, Plus, Filter, ArrowUpDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { OrderListTable } from "@/components/orders/OrderListTable";
@@ -23,10 +17,7 @@ export function OrderListPage() {
     currentPage,
     itemsPerPage,
     setSearchQuery,
-    setStatusFilter,
-    setSortBy,
     setCurrentPage,
-    setItemsPerPage,
     toggleOrderSelection,
   } = useStore();
 
@@ -96,44 +87,61 @@ export function OrderListPage() {
         <h1 className="text-2xl font-semibold text-foreground">Order List</h1>
       </div>
 
-      {/* Table Controls Bar */}
-      <div className="flex items-center justify-between">
+      {/* Table Controls Bar - Figma Design */}
+      <div
+        className="flex items-center justify-between rounded-lg px-2 py-2"
+        style={{
+          backgroundColor: "#F7F9FB",
+          gap: "16px",
+        }}
+      >
         {/* Left Group - Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center" style={{ gap: "8px" }}>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="h-8 px-3 bg-background border-border hover:bg-accent"
+            className="h-8 w-8 p-0 hover:bg-white/50"
+            style={{ backgroundColor: "transparent" }}
           >
-            <Plus className="h-4 w-4 mr-1" />
-            Add
+            <Plus className="h-5 w-5" style={{ color: "#1C1C1C" }} />
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="h-8 px-3 bg-background border-border hover:bg-accent"
+            className="h-8 w-8 p-0 hover:bg-white/50"
+            style={{ backgroundColor: "transparent" }}
           >
-            <Filter className="h-4 w-4 mr-1" />
-            Filter
+            <Filter className="h-5 w-5" style={{ color: "#1C1C1C" }} />
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
-            className="h-8 px-3 bg-background border-border hover:bg-accent"
+            className="h-8 w-8 p-0 hover:bg-white/50"
+            style={{ backgroundColor: "transparent" }}
           >
-            <ArrowUpDown className="h-4 w-4 mr-1" />
-            Sort
+            <ArrowUpDown className="h-5 w-5" style={{ color: "#1C1C1C" }} />
           </Button>
         </div>
 
         {/* Right Group - Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search
+            className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2"
+            style={{ color: "rgba(28, 28, 28, 0.2)" }}
+          />
           <Input
             placeholder="Search"
             value={localSearch}
             onChange={(e) => handleSearch(e.target.value)}
-            className="h-8 w-64 pl-9 bg-background border-border"
+            className="h-8 pl-8 pr-2"
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.4)",
+              border: "1px solid rgba(28, 28, 28, 0.1)",
+              borderRadius: "8px",
+              width: "200px",
+              fontSize: "14px",
+              color: "rgba(28, 28, 28, 0.2)",
+            }}
           />
         </div>
       </div>
