@@ -13,13 +13,13 @@ export function RevenueByLocation() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-2xl p-6"
+      className="rounded-2xl p-4"
       style={{
         backgroundColor: "#F7F9FB",
         border: "1px solid rgba(28, 28, 28, 0.1)",
       }}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         {/* Title */}
         <div className="flex flex-col">
           <h3 className="text-sm font-semibold text-[#1C1C1C]">
@@ -96,14 +96,14 @@ export function RevenueByLocation() {
         </div>
 
         {/* Location List */}
-        <div className="space-y-3">
+        <div className="space-y-2">
           {locations.map((location, index) => (
             <motion.div
               key={location.city}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * index }}
-              className="space-y-2"
+              className="space-y-1"
             >
               <div className="flex items-center justify-between">
                 <span className="text-sm font-normal text-[#1C1C1C]">

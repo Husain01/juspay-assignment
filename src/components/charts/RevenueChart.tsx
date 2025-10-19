@@ -5,17 +5,17 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 
+// Exact data from Figma analysis
 const data = [
-  { month: "Jan", currentWeek: 8500, previousWeek: 9800 },
-  { month: "Feb", currentWeek: 9200, previousWeek: 10200 },
-  { month: "Mar", currentWeek: 7800, previousWeek: 9500 },
-  { month: "Apr", currentWeek: 8800, previousWeek: 9200 },
-  { month: "May", currentWeek: 7600, previousWeek: 10100 },
-  { month: "Jun", currentWeek: 7200, previousWeek: 8900 },
+  { month: "Jan", currentWeek: 12, previousWeek: 6 },
+  { month: "Feb", currentWeek: 8, previousWeek: 17 },
+  { month: "Mar", currentWeek: 7, previousWeek: 12 },
+  { month: "Apr", currentWeek: 16, previousWeek: 10 },
+  { month: "May", currentWeek: 19, previousWeek: 18 },
+  { month: "Jun", currentWeek: 18.5, previousWeek: 22 },
 ];
 
 export function RevenueChart() {
@@ -24,104 +24,127 @@ export function RevenueChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-2xl p-6"
+      className="rounded-2xl w-full h-full col-span-3 col-start-1"
       style={{
-        backgroundColor: "#F7F9FB",
+        backgroundColor: "#F7F9FB", // fill_NTW6P5
         border: "1px solid rgba(28, 28, 28, 0.1)",
+        padding: "24px", // layout_AZW9ST padding
+        // width: "662px", // layout_AZW9ST width
+        // height: "318px", // layout_AZW9ST height
       }}
     >
-      <div className="flex flex-col gap-4">
-        {/* Header with Title and Legend */}
-        <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 h-full">
+        {/* Header with Title and Legend - Exact Figma Layout */}
+        <div className="flex items-center gap-4">
           {/* Title */}
           <div className="flex flex-col">
-            <h3 className="text-sm font-semibold text-[#1C1C1C]">Revenue</h3>
+            <h3
+              className="text-sm font-semibold text-[#1C1C1C]"
+              style={{ fontSize: "14px", fontWeight: 600 }}
+            >
+              Revenue
+            </h3>
           </div>
 
-          {/* Legend */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
-              <span className="text-xs font-normal text-[#1C1C1C]">
-                Current Week <span className="font-semibold">$58,211</span>
-              </span>
-            </div>
-            <span className="text-sm font-normal text-[rgba(28,28,28,0.2)]">
-              |
+          {/* Separator */}
+          <span
+            className="text-sm font-normal"
+            style={{ color: "rgba(28, 28, 28, 0.2)", fontSize: "14px" }}
+          >
+            |
+          </span>
+
+          {/* Current Week Tag */}
+          <div
+            className="flex items-center gap-2"
+            style={{ padding: "2px 8px 2px 4px" }}
+          >
+            <div className="w-4 h-4 bg-[#1C1C1C] rounded-full"></div>
+            <span
+              className="text-xs font-normal text-[#1C1C1C]"
+              style={{ fontSize: "12px" }}
+            >
+              Current Week <span className="font-semibold">$58,211</span>
             </span>
-            <div className="flex items-center gap-2">
-              <div className="h-2 w-2 rounded-full bg-[#1C1C1C]" />
-              <span className="text-xs font-normal text-[#1C1C1C]">
-                Previous Week <span className="font-semibold">$68,768</span>
-              </span>
-            </div>
+          </div>
+
+          {/* Previous Week Tag */}
+          <div
+            className="flex items-center gap-2"
+            style={{ padding: "2px 8px 2px 4px" }}
+          >
+            <div className="w-4 h-4 bg-[#A8C5DA] rounded-full"></div>
+            <span
+              className="text-xs font-normal text-[#1C1C1C]"
+              style={{ fontSize: "12px" }}
+            >
+              Previous Week <span className="font-semibold">$68,768</span>
+            </span>
           </div>
         </div>
 
         {/* Chart */}
-        <div className="flex flex-row gap-4">
-          {/* Left Text (Y-axis labels) */}
-          <div className="flex flex-col justify-between text-xs font-normal text-[rgba(28,28,28,0.4)]">
-            <div>30M</div>
-            <div>20M</div>
-            <div>10M</div>
-            <div>0</div>
-          </div>
-
-          {/* Chart Area */}
-          <div className="flex-1">
-            <ResponsiveContainer width="100%" height={200}>
-              <LineChart data={data}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="rgba(28, 28, 28, 0.1)"
-                  vertical={false}
-                />
-                <XAxis
-                  dataKey="month"
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: "rgba(28, 28, 28, 0.4)", fontSize: 12 }}
-                  tickFormatter={(value) => `${value / 1000}k`}
-                  domain={[0, 30000]}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#FFFFFF",
-                    border: "1px solid rgba(28, 28, 28, 0.1)",
-                    borderRadius: "8px",
-                    fontSize: "12px",
-                  }}
-                  formatter={(value: number) => [
-                    `$${value.toLocaleString()}`,
-                    "",
-                  ]}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="currentWeek"
-                  stroke="#1C1C1C"
-                  strokeWidth={3}
-                  dot={false}
-                  activeDot={{ r: 6 }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="previousWeek"
-                  stroke="#1C1C1C"
-                  strokeWidth={3}
-                  strokeDasharray="3 10"
-                  dot={false}
-                  activeDot={{ r: 6 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+        <div style={{ height: "232px", width: "100%" }}>
+          <ResponsiveContainer width="100%" height={232}>
+            <LineChart
+              data={data}
+              margin={{ top: 20, right: 20, left: -20, bottom: 20 }}
+            >
+              <CartesianGrid
+                strokeDasharray="1 1"
+                stroke="rgba(28, 28, 28, 0.05)"
+                vertical={false}
+                horizontal={true}
+              />
+              <XAxis
+                dataKey="month"
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "rgba(28, 28, 28, 0.4)",
+                  fontSize: 12,
+                  fontWeight: 400,
+                }}
+                interval={0}
+              />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{
+                  fill: "rgba(28, 28, 28, 0.4)",
+                  fontSize: 12,
+                  fontWeight: 400,
+                }}
+                domain={[0, 30]}
+                ticks={[0, 10, 20, 30]}
+                tickFormatter={(value) => (value === 0 ? "0" : `${value}M`)}
+              />
+              <Line
+                type="monotone"
+                dataKey="currentWeek"
+                stroke="#1C1C1C"
+                strokeWidth={3}
+                dot={{
+                  fill: "#FFFFFF",
+                  stroke: "#1C1C1C",
+                  strokeWidth: 1,
+                  r: 4,
+                }}
+                activeDot={{ r: 6, fill: "#1C1C1C" }}
+                connectNulls={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="previousWeek"
+                stroke="#A8C5DA"
+                strokeWidth={3}
+                strokeDasharray="3 10"
+                dot={false}
+                activeDot={{ r: 6, fill: "#A8C5DA" }}
+                connectNulls={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
       </div>
     </motion.div>

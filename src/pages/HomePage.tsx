@@ -124,11 +124,9 @@ export function HomePage() {
             <ProjectionsChart />
           </motion.div>
         </div>
-        <div className="col-span-1">{/* Empty space */}</div>
-
         {/* Third Row: Revenue Chart (3:1) */}
         <div className="col-span-3">
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="h-full">
             <RevenueChart />
           </motion.div>
         </div>
